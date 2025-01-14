@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="mystyle.css">
+  <title>Leaflet</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+</head>
+
+<body>
+  <p style="font-style: italic; font-size: 10px;"> Back to <a href="ce 514.html">Class Page</a></p>
+  <h1>HW 2</h1>
+  <p>       Here's Shoshone Falls, a place I love. I worked the Summer after High School and before my mission in Twin Falls. 
+    In the evenings, I often came out here to hike around, and I found a perfect spot on a plateau overlooking the falls to sit.
+    I'll never forget one specific evening while sitting above the falls and watching the sunset. While pondering and praying, I was filled with an overwhelming sense of hope and excitement for the future.
+    If you're ever driving to the Boise area, I'd highly recommend taking the thirty minute detour to check out the falls.</p>
+  <h2>Leaflet</h2>
+
+  <div id="map" style="height: 600px; width: 1200px; margin: 0 auto;"></div>
+  <script>
+    var map = L.map('map').setView([42.59528, -114.40083], 16); 
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    }).addTo(map); 
+        // Add a marker for Shoshone Falls
+        var marker = L.marker([42.59528, -114.40083]).addTo(map);
+    marker.bindPopup("Shoshone Falls").openPopup(); 
+  </script>
+
+</body>
+</html>

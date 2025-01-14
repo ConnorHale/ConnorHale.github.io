@@ -1,0 +1,56 @@
+
+/*Doc Style */
+body {
+    font-family: 'Open Sans', sans-serif; 
+    background-color: #F5F5F5; 
+    margin: 0; 
+}
+
+/* Image Styles */
+.circular-image {
+    border-radius: 50%; 
+    width: 400px; 
+    height: 400px; 
+    object-fit: cover; 
+    margin: 0 auto;
+    display: block;
+    justify-content: center;
+    }
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px auto; 
+    }  
+    
+.image-container img {
+    display: flexbox; 
+    justify-content: center;
+    margin: 15px; 
+    max-width: 200px; 
+    }
+
+/* Heading Styles */
+h1, h2, h3 {
+    background-color: #4c3963;
+    color: #ffffff;
+    text-align: center;
+    display: block; 
+    padding: 10px; 
+    margin: 0, 20px;
+    }
+
+/* Paragraph Styles */   
+p {
+    font-size: 18px;
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    }
+    
+.note {
+    font-size: 12px;
+    font-style: italic;
+    }
