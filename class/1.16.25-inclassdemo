@@ -1,0 +1,88 @@
+<html>
+<body>
+<h1>
+Connor's Web page
+</h1>
+<h2>
+demo demo demo
+</h2>
+<h3>
+text text text
+</h3>
+<p>
+paragraph paragraph paragraph
+</p>
+<p>
+<a href="https://www.worldometers.info/languages/english-alphabet/">abcdefghijklmnopqrstuvwxyz</a>
+</p>
+<p>
+I'm supposed to write my <b>life story</b> here. Born: <a href= "https://www.saintalphonsus.org/"> Boise, ID </a> at St Al's.
+</p>
+<p>
+I like to <i>eat</i> <a href="https://www.tasteofhome.com/recipes/best-lasagna/">lasagna</a>.
+</p>
+<h3>
+classes I'm taking this semester
+</h3>
+<ul>
+<li>Water and Wastewater Treatment Facilities</li>
+<li>Geospatial Software Development</li>
+<li>Advanced Hydraulic Routing</li>
+</ul>
+<h3>
+Most recent shows/movies I've seen
+</h3>
+<ul>
+<li>Pantheon</li>
+<li>Hundreds of Beavers</li>
+<li>Wild Robot</li>
+</ul>
+<h3>
+A Dang Good Album
+</h3>
+<img src="https://en.wikipedia.org/wiki/File:Brandon_Flowers_-_Flamingo.png">
+</body>
+<table>
+<h3>
+Books I've Read Recently
+</h3>
+<tr>
+  <td>
+    Title
+  </td>
+  <td>
+    Author
+  </td>
+  <td>
+    Date
+  </td>
+  <td>
+    Genre
+  </td>
+</tr>
+<tr>
+  <td>Children of Time</td>
+  <td>Adrian Tchaikovsky</td>
+  <td>1.13.25</td>
+  <td>Sci-Fi</td>
+</tr>
+<tr>
+  <td>Blood over Bright Haven</td>
+  <td>ML Wang</td>
+  <td>12.16.25</td>
+  <td>Fantasy </td>
+</tr>
+<tr>
+  <td>Cadillac Desert</td>
+  <td>Marc Reisner</td>
+  <td>12.05.25</td>
+  <td>NonFiction </td>
+</tr>
+<tr>
+  <td>Of Blood and Fire</td>
+  <td>Ryan Cahill</td>
+  <td>12.03.25</td>
+  <td>Fantasy </td>
+</tr>
+</table>
+</html>
