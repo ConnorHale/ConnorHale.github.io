@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../../mystyle.css">
+  </head>
+
+<script language=javascript>
+    function displayTime() {
+      let date = new Date()
+      let hours = date.getHours()
+      let min = date.getMinutes()
+      let sec = date.getSeconds()
+      let timeString = hours + ":" + min + ":" + sec;
+      document.getElementById("clock").innerHTML = timeString;
+      }
+      setInterval(displayTime,1000);
+      
+    function convertUnits (){
+      let inputnumber = document.getElementById("inputnumber").value
+      let inputunits = document. getElementById("in-units").value
+      let outputunits = document. getElementById("out-units").value
+      let inconversion = 0
+      let outconversion = 0
+      let outputnumber=0
+      if(inputunits=="in"){
+        inconversion = 0.0254
+      }
+      if(inputunits=="ft"){
+        inconversion = 0.3048
+      }
+      if(inputunits=="mi"){
+        inconversion = 1609.344
+      }
+      if(inputunits=="cm"){
+        inconversion = .01
+      }
+      if(inputunits=="m"){
+        inconversion = 1
+      }
+      if(inputunits=="km"){
+        inconversion = 1000
+      }
+      if(outputunits=="in"){
+        outconversion = 0.0254
+      }
+      if(outputunits=="ft"){
+        outconversion = 0.3048
+      }
+      if(outputunits=="mi"){
+        outconversion = 1609.344
+      }
+      if(outputunits=="cm"){
+        outconversion = .01
+      }
+      if(outputunits=="m"){
+        outconversion = 1
+      }
+      if(outputunits=="km"){
+        outconversion = 1000
+      }
+      outputnumber=inputnumber * inconversion / outconversion
+      document.getElementById("outputvalue").innerHTML= outputnumber.toFixed(2) + " " + document. getElementById("out-units").value
+    }
+</script>
+
+<body>
+  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+<h1>
+Javascript Practice
+</h1>
+
+<h2>
+Clock
+</h2>
+
+<div class="centered">
+<div id="clock"></div>
+</div>
+
+<h2>
+Length Unit Converter
+</h2>
+
+<p>
+Input Value:&nbsp;&nbsp;&nbsp;&nbsp; <Input type="text" id="inputnumber"><br>
+
+Input Units:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <select id ="in-units" name="units">
+    <option value="in">Inches</option>
+    <option value="ft">Feet</option>
+    <option value="mi">Miles</option>
+    <option value="cm">Centimeters</option>
+    <option value="m">Meters</option>
+    <option value="km">Kilometers</option>
+  </select>
+<br>
+Output Units:&nbsp;&nbsp;
+  <select id ="out-units" name="units">
+    <option value="in">Inches</option>
+    <option value="ft">Feet</option>
+    <option value="mi">Miles</option>
+    <option value="cm">Centimeters</option>
+    <option value="m">Meters</option>
+    <option value="km">Kilometers</option>
+  </select>
+  <br>
+  Output Value:&nbsp; <b><span id="outputvalue"></span></b> 
+  <br>
+  <input type="submit" onclick="convertUnits()">
+  <br>
+
+</p>
+</body>
+</html>
