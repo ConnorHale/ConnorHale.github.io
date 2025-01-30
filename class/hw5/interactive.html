@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../../mystyle.css">
+  <title>Leaflet</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<div class="container">
+<body>
+  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+  <hr>
+  <h1>HW 5</h1>
+  <hr>
+  <p>This is Emmett, ID, Home Sweet Home. 
+    I was born and raised in this beautiful little town with a population of around 5,000
+    and a graduating class of around 100. 
+    <br><br>The markers on the map show some important locations, and
+    the circle around my house shows the perimeter of where I might be able to walk from my house in 10 minutes.
+    <br><br> The purple line marks the distance between the specified coordinates. The line travels the "Great Circle".</p>
+
+  <hr>
+  <h2>Interactive Map</h2>
+  <hr>
+
+  <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
+
+  <p>
+    Point 1 Long.:&nbsp;&nbsp;&nbsp; <input type="text" id="1lon" value="-116.557873"><br>
+    Point 1 Lat.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="1lat" value="43.832945"><br>
+    Point 2 Long.:&nbsp;&nbsp;&nbsp; <input type="text" id="2lon" value="-116.508692"><br>
+    Point 2 Lat.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="2lat" value="43.864081"><br>
+    <button id="calculateButton">Calculate and Draw</button> <br>
+    <b><span id="distance"></span></b> 
+  </p>
+
+  
+
+<script>
+  const map = L.map('map').setView([43.86, -116.4993], 13);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  }).addTo(map);
+
+  const markers = [
+    { lat: 43.832945, lng: -116.557873, popup: "My House" },
+    { lat: 43.864081, lng: -116.508692, popup: "High School" },
+    { lat: 43.873116, lng: -116.486920, popup: "Church" },
+    { lat: 43.87901, lng: -116.507557, popup: "Island Sports Complex" }
+  ];
+
+  markers.forEach(markerData => {
+    const marker = L.marker([markerData.lat, markerData.lng]).addTo(map);
+    marker.bindPopup(markerData.popup);
+    marker.on('mouseover', () => marker.openPopup());
+    marker.on('mouseout', () => marker.closePopup());
+  });
+
+  const circle = L.circle([43.832945, -116.557873], {
+    radius: 1000, 
+    color: 'blue',
+    fillColor: 'lightblue',
+    fillOpacity: 0.3
+  }).addTo(map);
+
+  let polyline; 
+
+  function gc() {
+    const lon1 = parseFloat(document.getElementById("1lon").value);
+    const lat1 = parseFloat(document.getElementById("1lat").value);
+    const lon2 = parseFloat(document.getElementById("2lon").value);
+    const lat2 = parseFloat(document.getElementById("2lat").value);
+
+    if (isNaN(lon1) || isNaN(lat1) || isNaN(lon2) || isNaN(lat2)) {
+      alert("Please enter valid numeric coordinates.");
+      return;
+    }
+
+    const R = 6371;
+    const radlat1 = lat1 * Math.PI / 180;
+    const radlon1 = lon1 * Math.PI / 180;
+    const radlat2 = lat2 * Math.PI / 180;
+    const radlon2 = lon2 * Math.PI / 180;
+    const dlat = radlat2 - radlat1;
+    const dlon = radlon2 - radlon1;
+
+    const a = Math.sin(dlat / 2) ** 2 + Math.cos(radlat1) * Math.cos(radlat2) * Math.sin(dlon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const dist = R * c;
+
+    document.getElementById("distance").innerHTML = "Distance = " + dist.toFixed(2) + " km";
+
+    const numPoints = 100;
+    const points = [];
+
+    for (let i = 0; i <= numPoints; i++) {
+      const f = i / numPoints;
+
+      const A = Math.sin((1 - f) * c) / Math.sin(c);
+      const B = Math.sin(f * c) / Math.sin(c);
+
+      const x = A * Math.cos(radlat1) * Math.cos(radlon1) + B * Math.cos(radlat2) * Math.cos(radlon2);
+      const y = A * Math.cos(radlat1) * Math.sin(radlon1) + B * Math.cos(radlat2) * Math.sin(radlon2);
+      const z = A * Math.sin(radlat1) + B * Math.sin(radlat2);
+
+      const newlat = Math.atan2(z, Math.sqrt(x * x + y * y)) * 180 / Math.PI;
+      const newlon = Math.atan2(y, x) * 180 / Math.PI;
+
+      points.push([newlat, newlon]);
+    }
+
+    if (polyline) {
+      map.removeLayer(polyline);
+    }
+    polyline = L.polyline(points, { color: 'purple' }).addTo(map);
+  }
+
+  const calculateButton = document.getElementById("calculateButton");
+  calculateButton.addEventListener("click", gc);
+</script>
+
+</body>
+</html>

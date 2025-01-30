@@ -2,8 +2,27 @@
 /*Doc Style */
 body {
     font-family: 'Open Sans', sans-serif; 
-    background-color: #F5F5F5; 
     margin: 0; 
+    min-height: 100vh; 
+    width: 100vw; 
+    display: flex; 
+    background: radial-gradient(circle, #962828, #414141); /* Use circle or ellipse */
+    background-size: cover; 
+    background-position: center; 
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.container {
+    background-color:#ede8d8; 
+    border-radius: 10px; 
+    box-shadow:#000000;
+    max-width: 1000px;
+    min-height:fit-content;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    box-sizing: border-box;
 }
 
 /* Image Styles */
@@ -16,6 +35,17 @@ body {
     display: block;
     justify-content: center;
     }
+
+/* Initial Image Style */
+img {
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Hover Effect */
+img:hover {
+    transform: scale(1.1); /* Scale the image up by 10% */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+}
 
 .image-container {
     display: flex;
@@ -33,21 +63,31 @@ body {
 
 /* Heading Styles */
 h1, h2, h3 {
-    background-color: #4c3963;
-    color: #ffffff;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
     display: block; 
-    padding: 10px; 
-    margin: 0, 20px;
+    background-color:#a9a59b;
+    padding: 10px 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     }
+
+hr {
+    border: 0;
+    height: 3px;
+    background: #000000;
+    padding:0px 0px;
+    margin-top: 0px;
+    margin-bottom: 0px
+}
 
 /* Paragraph Styles */   
 p {
-    font-size: 18px;
-    margin-left: 75px;
-    margin-right: 75px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    font-size: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     }
 
 .centered {
