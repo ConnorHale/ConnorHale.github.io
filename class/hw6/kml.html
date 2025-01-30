@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../../mystyle.css">
+  <title>Leaflet</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+  <script src="https://unpkg.com/leaflet-kml@latest/dist/leaflet-kml.js"></script>
+</head>
+
+<div class="container">
+<body>
+  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+  <hr>
+  <h1>HW 5</h1>
+  <hr>
+  <p>This is Emmett, ID, Home Sweet Home. 
+    <br><br>The markers on the map show some important locations, and
+    the circle around my house shows the perimeter of where I might be able to walk from my house in 10 minutes.
+    <br><br> The purple line marks the distance between the specified coordinates. The line travels the "Great Circle".</p>
+
+  <hr>
+  <h2>Interactive Map</h2>
+  <hr>
+
+  <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
+
+<script>
+  const map = L.map('map').setView([43.832, -116.55669], 16);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  }).addTo(map);
+  omnivore.kml('Hale Property.kml').addTo(map);
+
+  
+    });
+
+</script>
+
+</body>
+</html>
