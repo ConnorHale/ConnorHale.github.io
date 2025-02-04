@@ -27,33 +27,35 @@
 
   <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
 
-<code> //Here is the code I used to attach the KML files
-//In the Head, I scripted omnivore for KML conversion
-	  <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> 
+<hr>
+<h2>CodeL</h2>
+<hr>
+	  
+<code> //Here is the code I used to attach the KML files <br>
+//In the Head, I scripted omnivore for KML conversion <br>
+<script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> <br>
 
 	
-    //In Script I placed KML Files in a list
-    const KMLlist = [
-      "Canal1.kml",
-      "canal2.kml",
-      "prop.kml",
-    ];
-  
-   //Added  
+    //In Script I placed KML Files in a list<br>
+    const KMLlist = [<br>
+      "Canal1.kml",<br>
+      "canal2.kml",<br>
+      "prop.kml",<br>
+    ];<br>
 
-    // Added KML files to the map
-KMLlist.forEach((url) => {
-  omnivore.kml(url)
-    .on('ready', function () {
-      console.log("Successfully loaded:", url);
-      this.addTo(map);
-    })
-    .on('error', function () {
-      console.error("Error loading KML file:", url);
-    });
-  })
-//});
-  </script>
+    // Added KML files to the map<br>
+KMLlist.forEach((url) => {<br>
+  omnivore.kml(url)<br>
+    .on('ready', function () {<br>
+      console.log("Successfully loaded:", url);<br>
+      this.addTo(map);<br>
+    })<br>
+    .on('error', function () {<br>
+      console.error("Error loading KML file:", url);<br>
+    });<br>
+  })<br>
+//});<br>
+
 </code>
 	  
   <script>
