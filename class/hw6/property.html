@@ -28,33 +28,33 @@
   <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
 
 <hr>
-<h2>CodeL</h2>
+<h2>Code</h2>
 <hr>
 	  
-<code> //Here is the code I used to attach the KML files <br>
-//In the Head, I scripted omnivore for KML conversion <br>
-<script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> <br>
+<code>  &nbsp //Here is the code I used to attach the KML files <br>
+ &nbsp  &nbsp //In the Head, I scripted omnivore for KML conversion <br>
+ &nbsp  &nbsp  &nbsp <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> <br>
 
 	
-    //In Script I placed KML Files in a list<br>
-    const KMLlist = [<br>
-      "Canal1.kml",<br>
-      "canal2.kml",<br>
-      "prop.kml",<br>
-    ];<br>
+     &nbsp  &nbsp //In Script I placed KML Files in a list<br>
+     &nbsp  &nbsp  &nbsp const KMLlist = [<br>
+      &nbsp  &nbsp  &nbsp  &nbsp  "Canal1.kml",<br>
+       &nbsp  &nbsp  &nbsp  &nbsp "canal2.kml",<br>
+       &nbsp  &nbsp  &nbsp  &nbsp "prop.kml",<br>
+     &nbsp  &nbsp  &nbsp ];<br>
 
-    // Added KML files to the map<br>
-KMLlist.forEach((url) => {<br>
-  omnivore.kml(url)<br>
-    .on('ready', function () {<br>
-      console.log("Successfully loaded:", url);<br>
-      this.addTo(map);<br>
-    })<br>
-    .on('error', function () {<br>
-      console.error("Error loading KML file:", url);<br>
-    });<br>
-  })<br>
-//});<br>
+     &nbsp  &nbsp // Added KML files to the map<br>
+ &nbsp  &nbsp  &nbsp KMLlist.forEach((url) => {<br>
+  &nbsp  &nbsp  &nbsp  &nbsp  omnivore.kml(url)<br>
+     &nbsp  &nbsp  &nbsp  &nbsp  &nbsp .on('ready', function () {<br>
+       &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp console.log("Successfully loaded:", url);<br>
+       &nbsp  &nbsp  &nbsp  &nbsp  &nbsp this.addTo(map);<br>
+     &nbsp  &nbsp  &nbsp  &nbsp })<br>
+     &nbsp  &nbsp  &nbsp .on('error', function () {<br>
+       &nbsp  &nbsp  &nbsp  &nbsp console.error("Error loading KML file:", url);<br>
+     &nbsp  &nbsp  &nbsp });<br>
+   &nbsp  &nbsp })<br>
+
 
 </code>
 	  
@@ -85,7 +85,7 @@ KMLlist.forEach((url) => {
       console.error("Error loading KML file:", url);
     });
   })
-//});
+
   </script>
   
 
