@@ -27,6 +27,35 @@
 
   <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
 
+<code> //Here is the code I used to attach the KML files
+//In the Head, I scripted omnivore for KML conversion
+	  <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> 
+
+	
+    //In Script I placed KML Files in a list
+    const KMLlist = [
+      "Canal1.kml",
+      "canal2.kml",
+      "prop.kml",
+    ];
+  
+   //Added  
+
+    // Added KML files to the map
+KMLlist.forEach((url) => {
+  omnivore.kml(url)
+    .on('ready', function () {
+      console.log("Successfully loaded:", url);
+      this.addTo(map);
+    })
+    .on('error', function () {
+      console.error("Error loading KML file:", url);
+    });
+  })
+//});
+  </script>
+</code>
+	  
   <script>
     // Create Map
   const map = L.map('map').setView([43.833, -116.55669], 16);
@@ -41,11 +70,9 @@
       "canal2.kml",
       "prop.kml",
     ];
-  
-    omnivore.kml("prop.kml").addTo(map);
 
     // Add KML files to the map
-    //KMLlist.forEach((kmlUrl) => {
+
 KMLlist.forEach((url) => {
   omnivore.kml(url)
     .on('ready', function () {
