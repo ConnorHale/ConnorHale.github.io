@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Utah Valley Race.kml</name>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="m_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_arrow">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_arrow0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_arrow0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_arrow0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_arrow1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_arrow1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_arrow1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_arrow</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_arrow</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ylw-pushpin1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="s_ylw-pushpin0">
+		<IconStyle>
+			<color>ff00aa00</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<color>ff00aa00</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sh_arrow">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sh_arrow0">
+		<IconStyle>
+			<color>ff00aaff</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sh_arrow1">
+		<IconStyle>
+			<color>ff000000</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<LineStyle>
+			<color>ff00aaff</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin1">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<PolyStyle>
+			<color>bfffff55</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sn_arrow">
+		<IconStyle>
+			<color>ff0000ff</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sn_arrow0">
+		<IconStyle>
+			<color>ff00aaff</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sn_arrow1">
+		<IconStyle>
+			<color>ff000000</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<LineStyle>
+			<color>ff00aaff</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin1">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<PolyStyle>
+			<color>bfffff55</color>
+		</PolyStyle>
+	</Style>
+	<Folder>
+		<name>Utah Valley Race</name>
+		<open>1</open>
+		<Placemark>
+			<name>Finish / Afterparty</name>
+			<styleUrl>#msn_ylw-pushpin0</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-111.6586887807504,40.23243602143718,0 -111.6569874127591,40.23242558814515,0 -111.6569919761585,40.23358169349626,0 -111.6575712724172,40.23357820974826,0 -111.6585063605467,40.2336060610093,0 -111.6585109005008,40.23287130441869,0 -111.6586796708388,40.23287130225916,0 -111.6586887807504,40.23243602143718,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Marathon</name>
+			<styleUrl>#m_ylw-pushpin0</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.6586096166672,40.23280356580538,0 -111.6586255634027,40.25122355222079,0 -111.6586605227262,40.26339035863442,0 -111.657062187867,40.2694160324827,0 -111.6573129249469,40.27351347156564,0 -111.658730757324,40.28406038512519,0 -111.6585881664976,40.28905349044953,0 -111.6565022657938,40.29978625920489,0 -111.6552200885173,40.30710219767649,0 -111.6559438842948,40.31149534928147,0 -111.6545629412402,40.31478415666714,0 -111.6518338664672,40.31596912550304,0 -111.6510732895701,40.31703267951088,0 -111.6496579493661,40.31829783506596,0 -111.6493389447437,40.3212189282828,0 -111.6443487357948,40.32341604327164,0 -111.6423419044867,40.32489575225003,0 -111.6413819918905,40.32734342944867,0 -111.6404608807477,40.3283019555309,0 -111.6388381773374,40.32869579078303,0 -111.6360739559632,40.32880821233528,0 -111.6349761922793,40.32847007784368,0 -111.6326386325594,40.32754377248823,0 -111.6307870272667,40.32771142969738,0 -111.6269870194808,40.3286375732009,0 -111.6200434505442,40.32894596609111,0 -111.618832723202,40.32965258124192,0 -111.616617014555,40.33187699727308,0 -111.6141032821824,40.33291318200478,0 -111.6130534768116,40.33369476973345,0 -111.6094552878933,40.33849207858157,0 -111.6078810566955,40.33962984506809,0 -111.6050373349796,40.3408050092339,0 -111.6034910595211,40.34180596381631,0 -111.6014710751621,40.3439181885483,0 -111.5992686759851,40.34567591973214,0 -111.5937464027287,40.3480733524778,0 -111.5902858236903,40.34892692494329,0 -111.5885668674917,40.34984317643856,0 -111.5876443591924,40.35070707015139,0 -111.584832416212,40.35160337774487,0 -111.5825288085636,40.35332415092608,0 -111.5793571584086,40.35470668194939,0 -111.5773971849626,40.35636978247061,0 -111.5728235631311,40.35657605059829,0 -111.5699268830708,40.35810590532133,0 -111.5687894302681,40.35877013484286,0 -111.5669292082038,40.3595885167585,0 -111.565220068859,40.36038031798364,0 -111.5615624105693,40.36219076952402,0 -111.5594057549838,40.36374060532,0 -111.5564966932346,40.36458202385307,0 -111.5552475412313,40.36636020324116,0 -111.5553011604401,40.37020782364188,0 -111.5558201456572,40.37224103040067,0 -111.555607067378,40.37328161140478,0 -111.5560227317052,40.37466905412509,0 -111.5550662264615,40.37725596118666,0 -111.5537895822662,40.3790543418434,0 -111.551485728607,40.38099867234592,0 -111.5518691272629,40.38342146881716,0 -111.5511918947189,40.38587668856333,0 -111.549368573785,40.38776429326543,0 -111.5476682285191,40.3903127970127,0 -111.5462324344382,40.39092083060509,0 -111.543189340366,40.39193823057393,0 -111.5419363060608,40.39269761022616,0 -111.5408957658398,40.39504886929387,0 -111.5398849203132,40.39720211851353,0 -111.5380238031501,40.3989728944106,0 -111.5353490931839,40.40023100780297,0 -111.5331791516447,40.4027786020997,0 -111.5318321269285,40.40476006216952,0 -111.5299053743525,40.40624509339773,0 -111.5282528117322,40.40618247583402,0 -111.5264549861554,40.4053296579354,0 -111.5230801103439,40.40575109674429,0 -111.5201825404654,40.40841253803025,0 -111.5172436211301,40.40930672459999,0 -111.5156236853607,40.41001995145611,0 -111.5114593523124,40.41129724441051,0 -111.5093699327413,40.41114629840411,0 -111.4974888288772,40.40764389400859,0 -111.4928448706232,40.40653242783556,0 -111.4888347759696,40.4066214663668,0 -111.4834379590197,40.40810069826914,0 -111.4792256504138,40.4092740392534,0 -111.4782752702184,40.41033112218836,0 -111.4773819817462,40.41036203351715,0 -111.4748759171205,40.40789809826456,0 -111.4729436192114,40.40681969509299,0 -111.4705843072262,40.40672165527746,0 -111.4665384356438,40.40709436305514,0 -111.4628830364368,40.40671018696826,0 -111.4402860999212,40.40245771177198,0 -111.4388451816467,40.40164220342648,0 -111.4322520100587,40.39471283063612,0 -111.4320408830592,40.3942091941484,0 -111.4315550196942,40.39301385690425,0 -111.4308461137738,40.39099096301135,0 -111.4298289123307,40.38934441945341,0 -111.4275406951706,40.3882881282207,0 -111.4257337267895,40.38769298704938,0 -111.4227784996847,40.38768729368239,0 -111.4226324962882,40.38505923141238,0 -111.4193281370912,40.38505277622731,0 -111.4191063793884,40.38333607769727,0 -111.4185494071656,40.38264257714069,0 -111.4127566537847,40.37974624452502,0 -111.4117846901242,40.37972337200032,0 -111.4043709229354,40.37609674467995,0 -111.4019760607208,40.37286799867214,0 -111.3999988237256,40.37130314839349,0 -111.398034975895,40.37034867578638,0 -111.3920559914255,40.36235735310343,0 -111.3885136134076,40.35702788611158,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>1/2 Marathon</name>
+			<styleUrl>#msn_ylw-pushpin1</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.6585524290781,40.23283362545379,0 -111.6588436342036,40.26350269981442,0 -111.657013653367,40.26938939494534,0 -111.6588022577953,40.28464051496036,0 -111.6585900483949,40.28924541174156,0 -111.6551842288764,40.30713486204503,0 -111.6559957708869,40.31153353015284,0 -111.6544883082433,40.31474089116028,0 -111.6518472124192,40.31597516721607,0 -111.6509314283187,40.31733226586257,0 -111.6495301223649,40.31831948069993,0 -111.6493160785508,40.32128005322539,0 -111.6444192059631,40.3234075202984,0 -111.6423708971659,40.32488798744923,0 -111.6411857348334,40.32743717407835,0 -111.6405390681498,40.3284240129335,0 -111.6373037290288,40.32883578911449,0 -111.6353623893561,40.32871280814322,0 -111.6327197357024,40.32747988494263,0 -111.6301314737706,40.32776807259233,0 -111.6268961738696,40.32863188742237,0 -111.6198858206449,40.32892044411309,0 -111.6165421668416,40.33183985815975,0 -111.6140072252853,40.33311464566813,0 -111.6094755336225,40.33829595736101,0 -111.6076557857568,40.3396960318588,0 -111.6043117180636,40.34105247226326,0 -111.6019380975971,40.34327227464541,0 -111.5993484161254,40.34569765753524,0 -111.5941690747224,40.34812283384524,0 -111.5902845843972,40.34886243114591,0 -111.5875320759825,40.35091787400992,0 -111.5848339746672,40.35165760421244,0 -111.5826746705113,40.35330203737988,0 -111.5791122268701,40.35478182031288,0 -111.5772908983347,40.35624263311332,0 -111.5724350157382,40.35661124224065,0 -111.5605044104063,40.36298023854668,0 -111.5584524769545,40.36404862138009,0 -111.5562390337239,40.36458239870372,0 -111.5552462044785,40.36651046391783,0 -111.5552429499729,40.37025123587588,0 -111.5559966312236,40.37222477386027,0 -111.5554558435917,40.3736221653847,0 -111.556048537673,40.37460905039962,0 -111.5553390476653,40.37638148371118,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>10k</name>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-111.6585110670751,40.23276160524431,0 -111.6587772734234,40.26324377251962,0 -111.6569407670686,40.26953388941097,0 -111.6588468521081,40.28477559672687,0 -111.6585666290418,40.28927784731852,0 -111.6551279207154,40.3075701995643,0 -111.6548891548463,40.30765255150856,0 -111.6547316864417,40.30651935118296,0 -111.6546370291714,40.30446654984813,0 -111.6532576929234,40.29464635399231,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>10k Start</name>
+			<LookAt>
+				<longitude>-111.6511423484573</longitude>
+				<latitude>40.29432269966199</latitude>
+				<altitude>0</altitude>
+				<heading>-0.02537925749446663</heading>
+				<tilt>16.55057910717067</tilt>
+				<range>734.6659298799759</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-111.653261731549,40.29464955351713,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1/2 Start</name>
+			<LookAt>
+				<longitude>-111.5486929221632</longitude>
+				<latitude>40.37573725966397</latitude>
+				<altitude>0</altitude>
+				<heading>0.04370370469398543</heading>
+				<tilt>10.34974612368092</tilt>
+				<range>2327.943766496234</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_arrow</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-111.5553089429659,40.3763831701082,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Marathon Start</name>
+			<LookAt>
+				<longitude>-111.3859797790073</longitude>
+				<latitude>40.3583730310793</latitude>
+				<altitude>0</altitude>
+				<heading>0.1490361612362772</heading>
+				<tilt>21.51949121846961</tilt>
+				<range>1426.606335587834</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_arrow1</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-111.3884794549533,40.35701021376616,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>FINISH</name>
+			<LookAt>
+				<longitude>-111.6575056171559</longitude>
+				<latitude>40.23349462819716</latitude>
+				<altitude>0</altitude>
+				<heading>-0.02049338512739888</heading>
+				<tilt>30.00191687608927</tilt>
+				<range>426.8103008681825</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_arrow0</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-111.6585571318997,40.23282430875534,0</coordinates>
+			</Point>
+		</Placemark>
+		<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.6.10201"></atom:link>
+	</Folder>
+</Document>
+</kml>
