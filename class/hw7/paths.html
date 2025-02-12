@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../mystyle.css">
+    <title>Hw7</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> 
+</head>
+<div class="container">
+<body>
+    <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+    <hr>
+    <h1>HW 7</h1>
+    <hr>
+    <p>
+        A few years ago I ran the half marathon course of the Utah Valley marathon, and it was a great time. 
+        This leaflet map is linked to a Hydroshare document that includes the starting points and courses of the marathon, half marathon, 10k, and 5k, along 
+        with a polygon that shows the location of the finish line and after-party area (very small if not zoomed in). By selecting a race from the dropdown
+        menu, you can see the different courses. <br>
+        <br> The race paths were observed from https://www.utahvalleymarathon.com on Feb 5, 2025.<br>
+        <br>The lines, points, and polygon used in the map below are stored in the following public Hydroshare document: 
+        https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/<br>
+        <hr>
+        <h2> Utah Valley Marathon Race Maps </h2>
+        <hr>
+        <p>
+        Race Selection:
+            <select id ="course" name="race">
+            <option value="M">Marathon</option>
+            <option value="1/2M">1/2 Marathon</option>
+            <option value="10K">10k</option>
+            <option value="A">All</option>
+            </select>
+        </p>
+    </p>
+
+    <div id="map" style="width: 100%; height: 600px;"></div>
+
+
+    <script>
+        var map = L.map('map').setView([40.3, -111.55], 11); // Centered on the US
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+
+        let courseLayer; // Store the course layer
+        let startLayer;  // Store the start layer
+
+        function updateMap(courselink) {
+            // Clear previous layers
+            if (courseLayer) {
+                map.removeLayer(courseLayer);
+            }
+            if (startLayer) {
+                map.removeLayer(startLayer);
+            }
+
+            let course_url;
+            let start_url;
+
+            if (courselink == "M") {
+                course_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/Marathon.kml';
+                start_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/Marathon_Start.kml';
+            } else if (courselink == "1/2M") {
+                course_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/12_Marathon.kml';
+                start_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/12_Start.kml';
+            } else if (courselink == "10K") {
+                course_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/10k.kml';
+                start_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/10k_Start.kml';
+            } else if (courselink == "A") {
+                course_url = 'https://www.hydroshare.org/resource/7dc3b86f757d4451a2494d74fe9d218b/data/contents/hw7/Utah_Valley_Race.kml';
+                start_url = null; // No start KML for "All"
+            }
+
+            if (start_url) {
+                startLayer = omnivore.kml(start_url)
+                    .on('ready', function () {
+                        this.addTo(map);
+                    });
+            }
+            
+            courseLayer = omnivore.kml(course_url)
+                .on('ready', function () {
+                    this.addTo(map);
+                });
+        }
+
+        // Initial map load
+        updateMap(document.getElementById("course").value);
+
+        // Event listener for select change
+        document.getElementById("course").addEventListener("change", function() {
+            updateMap(this.value);
+        });
+
+
+    </script>
+</div>
+</body>
+</html>

@@ -36,6 +36,34 @@ body {
     justify-content: center;
     }
 
+/* Select Box */
+select {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: all 0.3s ease; /* Smooth transitions */
+  }
+  
+  select:hover {
+    border-color: #aaa;
+    background-color: #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Box shadow on hover */
+  }
+  
+  select:focus {
+    outline: none;
+    border-color: #007bff; /* Highlight on focus */
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+  }
+
 /* Initial Image Style */
 img {
     transition: transform 0.3s ease; /* Smooth transition */
