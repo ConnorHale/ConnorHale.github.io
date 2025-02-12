@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../../mystyle.css">
+  <title>Leaflet</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script> 
+</head>
+
+<div class="container">
+<body>
+  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+  <hr>
+  <h1>HW 8</h1>
+  <hr>
+  <p>Currently having issues with this page. I've checked every resource I can find, and just can't get my html to find the KML files in the folder. Will get help to finish.
+
+  <hr>
+  <h2>Interactive Map</h2>
+  <hr>
+
+  <div class="code-container">
+		<code></code>
+
+
+  <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
+
+  <script>
+    // Create Map
+    const map = L.map('map').setView([43.832, -116.55669], 16);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+  
+    // KML Files in a list
+    const KMLlist = [
+      "Canal1.kml",
+      "canal2.kml",
+      "prop.kml",
+    ];
+  
+    omnivore.kml("prop.kml").addTo(map);
+
+    // Add KML files to the map
+    //KMLlist.forEach((kmlUrl) => {
+KMLlist.forEach((url) => {
+  omnivore.kml(url)
+    .on('ready', function () {
+      console.log("Successfully loaded:", url);
+      this.addTo(map);
+    })
+    .on('error', function () {
+      console.error("Error loading KML file:", url);
+    });
+  })
+//});
+  </script>
+  
+
+
+
+</body>
+</html>
