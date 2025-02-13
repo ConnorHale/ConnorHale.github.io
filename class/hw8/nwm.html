@@ -5,6 +5,28 @@
   <title>HW 8</title>
 </head>
 
+<style>
+      #forecast-container {
+  display: none;
+  margin-top: 20px;
+  border: 1px solid #dee2e6; /* Light gray border */
+  padding: 20px;
+  border-radius: 8px;
+  background-color: white; /* White background for the forecast area */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#streamflowChart {
+    margin-top: 20px;
+    width: 100%; /* Make the chart take full width */
+    max-width: 800px; /* Limit the maximum width */
+    height: 400px; /* Set a fixed height */
+    max-height: 600px; /* Limit the maximum height */
+    margin-left: auto; /* Center the chart horizontally */
+    margin-right: auto; /* Center the chart horizontally */
+}
+</style>
+
 <div class="container">
 <body>
   <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
@@ -17,6 +39,44 @@
     <a href="https://www.sciencedirect.com/science/article/pii/S1364815224001841">NWM Article 1</a>,
     <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/1752-1688.13184"> NWM Article 2</a>
     </p>
+
+    <hr>
+    <h2>Retrieve Reach ID</h2>
+    <hr>
+    <p>
+      To pull projections from the NWM, we need to first identify a reach ID. 
+      This designates the location that the information will be pulled from.
+      To do so, follow this link: <a href="https://water.noaa.gov/"> NWM Map</a>.
+      <br> Find the desired location and zoom in. Colored points designate monitored locations. Click on the point
+      and you'll find the reach ID over the monitored graph.
+    </p>
+
+    <hr>
+    <h2>Pull Projections from NWM</h2>
+    <hr>
+<p>
+  <input type="text" id="reachID" placeholder="Reach ID Here">
+  <button onclick="Forecast()">Forecast</button>
+        </section>
+
+        <div id="forecast-container">
+          <table id="timeseries-datatable">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Flow value</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <canvas id="streamflowChart"></canvas>
+        </div>
+      </p>
+
+
+    </p>
 </div>
 </body>
+<script src="nwm.js"></script> </body>
 </html>
