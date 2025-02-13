@@ -58,6 +58,7 @@
 
 <div class="container">
 <body>
+  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
   <hr>
   <h1>HW 8</h1>
   <hr>
@@ -97,8 +98,56 @@
     <canvas id="streamflowChart"></canvas>
   </div>
 
+  <hr>
+  <h2>Process Explained</h2>
+  <hr>
+  <ol>
+    <li>
+        <strong>Open the Reach ID</strong>
+        <div class="highlight">
+            <code>
+                const apiUrl = `https://api.water.noaa.gov/nwps/v1/reaches/${reachId}/streamflow?series=short_range`; <br>
+                const response = await fetch(apiUrl);
+            </code>
+        </div>
+    </li>
+    <li>
+        <strong>Record timesteps and flow values for a short range of time</strong>
+        <div class="highlight">
+            <code>
+                const streamflowData = json_data.shortRange.series.data; <br>
+                const timestamps = streamflowData.map(item => item.validTime); <br>
+                const flowValues = streamflowData.map(item => item.flow);
+            </code>
+        </div>
+    </li>
+    <li>
+        <strong>Populate the table with data from the range</strong>
+        <div class="highlight">
+            <code>
+                const table = document.getElementById('timeseries-datatable').getElementsByTagName('tbody')[0]; <br>
+                table.innerHTML = ""; <br><br>
 
-
+                for (let i = 0; i &lt; streamflowData.length; i++) { <br>
+                    const row = table.insertRow(); <br>
+                    const timestampCell = row.insertCell(); <br>
+                    const flowCell = row.insertCell(); <br>
+                    timestampCell.textContent = timestamps[i]; <br>
+                    flowCell.textContent = flowValues[i]; <br>
+                }
+            </code>
+        </div>
+    </li>
+    <li>
+        <strong>Create and populate the graph</strong>
+        <div class="highlight">
+            <code>
+                const ctx = document.getElementById('streamflowChart').getContext('2d'); <br>
+                let chart = Chart.getChart('streamflowChart');
+            </code>
+        </div>
+    </li>
+</ol>
 <script>
   document.querySelectorAll('a').forEach(link => {
     link.setAttribute('target', '_blank');
