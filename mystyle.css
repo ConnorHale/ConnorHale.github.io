@@ -129,3 +129,33 @@ p {
     font-size: 12px;
     font-style: italic;
     }
+
+/*Code*/
+ol {
+    padding-left: 20px;
+}
+
+ol li {
+    margin: 15px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+code {
+    display: block;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #d14;
+    overflow-x: auto;
+}
+
+ol li code {
+    font-size: 14px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    color: #444;
+    padding: 8px;
+    border-radius: 5px;
+}
