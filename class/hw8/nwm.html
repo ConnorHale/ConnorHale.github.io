@@ -1,82 +1,110 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="../../mystyle.css">
-  <title>HW 8</title>
-</head>
+  <title>NWM Forecast Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../../mystyle.css">  
 
-<style>
-      #forecast-container {
-  display: none;
-  margin-top: 20px;
-  border: 1px solid #dee2e6; /* Light gray border */
-  padding: 20px;
-  border-radius: 8px;
-  background-color: white; /* White background for the forecast area */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  <style>
+#forecast-container {
+    text-align: center;
+    padding: 20px;
 }
+
+#timeseries-datatable {
+    width: 80%;          /* Adjust width as needed */
+    margin: 0 auto;      /* Center the table horizontally */
+    border-collapse: collapse; /* Make the borders collapse into a single line */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a polished look */
+}
+
+#timeseries-datatable th, #timeseries-datatable td {
+    padding: 10px 15px; /* Add padding to cells for better spacing */
+    text-align: center;  /* Center the content of each cell */
+    border: 1px solid #ddd; /* Light gray border for table cells */
+}
+
+#timeseries-datatable th {
+    background-color: #671b1b; /* Add a background color to the header */
+    color: white;              /* White text for header */
+    font-size: 18px;           /* Slightly larger font for header */
+    font-weight: bold;         /* Bold text for header */
+}
+
+#timeseries-datatable td {
+    font-size: 16px; /* Slightly smaller font for the data rows */
+    color: #333;     /* Dark text for better readability */
+}
+
+#timeseries-datatable tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray background for even rows */
+}
+
+#timeseries-datatable tr:hover {
+    background-color: #ddd; /* Highlight rows on hover */
+}
+
 
 #streamflowChart {
     margin-top: 20px;
-    width: 100%; /* Make the chart take full width */
-    max-width: 800px; /* Limit the maximum width */
-    height: 400px; /* Set a fixed height */
-    max-height: 600px; /* Limit the maximum height */
-    margin-left: auto; /* Center the chart horizontally */
-    margin-right: auto; /* Center the chart horizontally */
+    width: 100%;
+    max-width: 800px;
+    height: 400px; 
+    max-height: 600px;
+    margin-left: auto; 
+    margin-right: auto;
 }
-</style>
+  </style>
+</head>
 
 <div class="container">
 <body>
-  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
   <hr>
   <h1>HW 8</h1>
   <hr>
-  <p>The National Water Model (NWM) is a hydrologic model that can be accessed online through the NOAA websited.
-    We can pull from it in our HTML page to retrieve real-time and future potential streamflow data. <br>
-    To Learn More: <a href="https://water.noaa.gov/about/nwm">NWM Summary</a>,
-    <a href="https://www.sciencedirect.com/science/article/pii/S1364815224001841">NWM Article 1</a>,
-    <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/1752-1688.13184"> NWM Article 2</a>
-    </p>
+<p>The National Water Model (NWM) is a hydrologic model where real-time and future streamflow projections are provided across the continental US.
+  We can pull the data from NWM with an API directly to this html site.<br>
+  For More Information: <a href="https://water.noaa.gov/about/nwm"> NWM Summary</a>,
+  <a href="https://www.sciencedirect.com/science/article/pii/S1364815224001841"> NWM Paper 1</a>,
+  <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/1752-1688.13184"> NWM Paper 2</a>
+</p>
 
-    <hr>
-    <h2>Retrieve Reach ID</h2>
-    <hr>
-    <p>
-      To pull projections from the NWM, we need to first identify a reach ID. 
-      This designates the location that the information will be pulled from.
-      To do so, follow this link: <a href="https://water.noaa.gov/"> NWM Map</a>.
-      <br> Find the desired location and zoom in. Colored points designate monitored locations. Click on the point
-      and you'll find the reach ID over the monitored graph.
-    </p>
-
-    <hr>
-    <h2>Pull Projections from NWM</h2>
-    <hr>
-<p>
+<hr>
+<h2>Reach ID</h2>
+<hr>
+<p>To pull data from the NWM, we need to identify a reach ID. The reach ID identifies the stream that we want to pull data from.
+  To find your desired reach ID, open NOAA NWM [<a href="https://water.noaa.gov">NWM Map</a>] and choose the desired point on the map.
+</p>
+<hr>
+<h2>Forecast</h2>
+<hr>
+<p>Type the Reach ID into the box and hit the "Get Forecast" button to see results.<br>
   <input type="text" id="reachID" placeholder="Reach ID Here">
-  <button onclick="Forecast()">Forecast</button>
+  <button onclick="Forecast()">Get Forecast</button>
         </section>
-
-        <div id="forecast-container">
-          <table id="timeseries-datatable">
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Flow value</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-          <canvas id="streamflowChart"></canvas>
-        </div>
       </p>
+  
+  <div id="forecast-container">
+    <table id="timeseries-datatable">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Streamflow (cfs)</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <canvas id="streamflowChart"></canvas>
+  </div>
 
 
-    </p>
+
+<script>
+  document.querySelectorAll('a').forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+</script>
+  <script src="nwm.js"></script> </body>
 </div>
-</body>
-<script src="nwm.js"></script> </body>
 </html>

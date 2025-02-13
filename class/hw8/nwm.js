@@ -54,16 +54,14 @@ async function Forecast() {
               {
                   label: "Streamflow Forecast (Short Range)",
                   data: flowValues,
-                  borderColor: "#0077b6", // Deep blue
+                  borderColor: "#7a1b06", 
                   borderWidth: 3,
                   fill: true,
-                  backgroundColor: createGradient(ctx),
-                  tension: 0.4, // Smooth curved lines
-                  pointBackgroundColor: "#ffcc00", // Yellow points
-                  pointBorderColor: "#005f99",
+                  tension: 0.4, 
+                  pointBackgroundColor: "#000000", 
+                  pointBorderColor: "#ffffff",
                   pointRadius: 5,
                   pointHoverRadius: 8,
-                  pointHoverBackgroundColor: "#ff5733", // Bright orange hover effect
               },
           ],
       },
@@ -73,7 +71,7 @@ async function Forecast() {
           plugins: {
               legend: {
                   labels: {
-                      color: "#333",
+                      color: "black",
                       font: {
                           size: 16,
                           weight: "bold",
@@ -89,22 +87,22 @@ async function Forecast() {
           },
           scales: {
               x: {
-                  ticks: { color: "#005f99", font: { size: 14 } },
+                  ticks: { color: "black", font: { size: 14 } },
                   grid: { color: "rgba(0, 0, 0, 0.1)" },
                   title: {
                       display: true,
-                      text: "Time",
-                      color: "#222",
+                      text: "Timestamp",
+                      color: "black",
                       font: { size: 16, weight: "bold" },
                   },
               },
               y: {
-                  ticks: { color: "#005f99", font: { size: 14 } },
+                  ticks: { color: "#black", font: { size: 14 } },
                   grid: { color: "rgba(0, 0, 0, 0.1)" },
                   title: {
                       display: true,
                       text: "Streamflow (cfs)",
-                      color: "#222",
+                      color: "black",
                       font: { size: 16, weight: "bold" },
                   },
               },
@@ -121,13 +119,7 @@ async function Forecast() {
       },
   });
   
-  // Function to create a water-like gradient
-  function createGradient(ctx) {
-      let gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-      gradient.addColorStop(0, "rgba(0, 119, 182, 0.5)"); // Deep blue
-      gradient.addColorStop(1, "rgba(173, 216, 230, 0.2)"); // Light blue
-      return gradient;
-  }
+
   
   
     } catch (error) {
@@ -143,4 +135,3 @@ async function Forecast() {
     }
   }
   
-
