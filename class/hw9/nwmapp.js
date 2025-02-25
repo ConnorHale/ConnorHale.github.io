@@ -1,7 +1,7 @@
 // Initialize the map
 var map = L.map('map', {
-    center: [43.833, -116.55669],  // Set the initial view
-    zoom: 7,                      // Initial zoom level
+    center: [44.15, -116.55669],  // Set the initial view
+    zoom: 9,                      // Initial zoom level
     scrollWheelZoom: false,        // Disable scroll zoom
     dragging: false,               // Disable dragging (panning)
     touchZoom: false,              // Disable touch zoom (for mobile devices)
@@ -19,11 +19,12 @@ let reqDepth = null;  // This will store the entered reqDepth value
 
 // Function to get forecast data from the API and process it
 async function Forecast() {
-  const gaugeId = document.getElementById('gaugeID').value;
-  if (!gaugeId) {
-    alert("Please enter a Gauge ID.");
+  if (!clickedGaugeID) {
+    alert("Please click on a marker to select a Gauge ID.");
     return;
-  }
+}
+
+  const gaugeId = clickedGaugeID;  // Use the GaugeID stored in clickedGaugeID
 
   const forecastContainer = document.getElementById('forecast-container');
   forecastContainer.style.display = 'block';
@@ -37,11 +38,11 @@ async function Forecast() {
 
     const json_data = await response.json();
 
-    if (!json_data.observed) {
+    if (!json_data.forecast) {
       throw new Error("No forecast data available for this Gauge ID.");
     }
 
-    const streamflowData = json_data.observed.data;
+    const streamflowData = json_data.forecast.data;
 
     // Initialize arrays to store daily statistics
     groupedData = [];
@@ -202,7 +203,7 @@ function updateChart() {
       }
       chartLabel = "Streamflow Forecast";
       chartColor = "#7a1b06";  // Brown for Streamflow
-      yAxisLabel = "Streamflow (cfs)";  // Set Y-axis label to 'Streamflow' for flow
+      yAxisLabel = "Streamflow (kcfs)";  // Set Y-axis label to 'Streamflow' for flow
     }
   
     // Update chart's label and color
@@ -246,7 +247,7 @@ function updateReqDepth() {
     }
 
     // Display the required depth in the text
-    document.getElementById('reqDepthDisplay').textContent = `Required Depth: ${reqDepth} meters`;
+    document.getElementById('reqDepthDisplay').textContent = `Required Depth: ${reqDepth} feet`;
 
     // Store reqDepth in the hidden input field
     document.getElementById('reqDepth').value = reqDepth;
@@ -315,7 +316,7 @@ function checkLowElevation() {
                         pointHoverRadius: 8,
                     },
                     {
-                        label: `Flat Line at Req Depth (${reqDepth} meters)`,
+                        label: `Flat Line at Required Depth (${reqDepth} feet)`,
                         data: flatLineData,  // This creates the flat line
                         borderColor: "#FF0000",  // Flat line color (Red)
                         borderWidth: 2,
@@ -375,31 +376,284 @@ function checkLowElevation() {
 }
 
 
- // Fetch the CSV data
- fetch('gauges.csv')  // Update with your correct path to the CSV
- .then(response => response.text())
- .then(csvString => {
-     // Parse the CSV data using PapaParse
-     const data = Papa.parse(csvString, {
-         header: true, // Use first row as headers
-         dynamicTyping: true // Automatically convert types
-     }).data;
+// Manually defined data (as an array of objects)
+const data = [
+  {
+      Name: "Boise River",
+      GaugeID: 13206000,
+      ReachID: 23398831,
+      Lat: 43.6606,
+      Long: -116.279,
+      rp2: 87.36,
+      rp5: 133.23,
+      rp10: 163.60,
+      rp25: 201.97,
+      rp50: 230.44,
+      rp100: 258.70
+  },
+  {
+      Name: "Payette River (Emmett)",
+      GaugeID: 13249500,
+      ReachID: 24166358,
+      Lat: 43.9306,
+      Long: -116.442,
+      rp2: 516.68,
+      rp5: 748.65,
+      rp10: 902.23,
+      rp25: 1096.27,
+      rp50: 1240.23,
+      rp100: 1383.12
+  },
+  {
+      Name: "Payette River (Horseshoe Bend)",
+      GaugeID: 13247500,
+      ReachID: 24166566,
+      Lat: 43.9433,
+      Long: -116.197,
+      rp2: 157.43,
+      rp5: 238.36,
+      rp10: 291.94,
+      rp25: 359.63,
+      rp50: 409.86,
+      rp100: 459.71
+  },
+  {
+      Name: "Payette River (Payette)",
+      GaugeID: 13251000,
+      ReachID: 24166140,
+      Lat: 44.0422,
+      Long: -116.925,
+      rp2: 157.22,
+      rp5: 243.99,
+      rp10: 301.44,
+      rp25: 374.03,
+      rp50: 427.88,
+      rp100: 481.33
+  },
+  {
+      Name: "Middle Fork Payette (Crouch)",
+      GaugeID: 13237920,
+      ReachID: 24164073,
+      Lat: 44.1086,
+      Long: -115.982,
+      rp2: 1541.40,
+      rp5: 2117.38,
+      rp10: 2498.73,
+      rp25: 2980.57,
+      rp50: 3338.03,
+      rp100: 3692.85
+  },
+  {
+      Name: "South Fork Payette (Lowman)",
+      GaugeID: 13235000,
+      ReachID: 24158523,
+      Lat: 44.0853,
+      Long: -115.622,
+      rp2: 511.35,
+      rp5: 748.11,
+      rp10: 904.87,
+      rp25: 1102.93,
+      rp50: 1249.86,
+      rp100: 1395.71
+  },
+  {
+      Name: "Mores Creek (Robie)",
+      GaugeID: 13200000,
+      ReachID: 23382303,
+      Lat: 43.6481,
+      Long: -115.990,
+      rp2: 53.40,
+      rp5: 79.14,
+      rp10: 96.19,
+      rp25: 117.73,
+      rp50: 133.71,
+      rp100: 149.58
+  },
+  {
+      Name: "Snake River (Weiser)",
+      GaugeID: 13269000,
+      ReachID: 24193082,
+      Lat: 44.2456,
+      Long: -116.980,
+      rp2: 263.80,
+      rp5: 395.84,
+      rp10: 483.27,
+      rp25: 593.74,
+      rp50: 675.69,
+      rp100: 757.03
+  },
+  {
+      Name: "Weiser River (Cambridge)",
+      GaugeID: 13258500,
+      ReachID: 24184234,
+      Lat: 44.5794,
+      Long: -116.643,
+      rp2: 517.06,
+      rp5: 750.31,
+      rp10: 904.75,
+      rp25: 1099.88,
+      rp50: 1244.63,
+      rp100: 1388.32
+  }
+];
 
-     // Loop through the data and create markers
-     data.forEach(row => {
-         // Ensure we have valid latitude and longitude
-         if (row.Lat && row.Long) {
-             L.marker([row.Lat, row.Long])  // Create a marker at lat, long
-                 .bindPopup(`<strong>${row.Name}</strong><br>GaugeID: ${row.GaugeID}`)  // Popup with data
-                 .addTo(map);  // Add the marker to the map
-         }
-     });
- })
- .catch(error => {
-     console.error('Error loading CSV:', error);
- });
+// Variable to store clicked GaugeID
+let clickedGaugeID = null;
 
+// Loop through the data and create markers
+data.forEach(row => {
+  if (row.Lat && row.Long) {  // Ensure valid lat/long values
+      const marker = L.marker([row.Lat, row.Long]) // Create a marker at lat, long
+          .bindTooltip(row.Name)  // Tooltip will show the Name on hover
+          .addTo(map);  // Add the marker to the map
 
- L.marker([row.Lat, row.Long])
- .bindPopup(`<strong>${row.Name}</strong><br>GaugeID: ${row.GaugeID}`)
- .addTo(map);  // Add marker to the map
+      // Event listener for click to store GaugeID
+      marker.on('click', function() {
+        clickedGaugeID = row.GaugeID;
+        clickedName = row.Name;
+        clickedrp2 = row.rp2;
+        clickedrp10 = row.rp10;
+        clickedrp50 = row.rp50;
+        document.getElementById('clickedGaugeId').textContent = clickedGaugeID;
+        document.getElementById('clickedName').textContent = clickedName;
+
+        Forecast()
+      });
+  }
+});
+
+function checkFlood() {
+  // Get the rp2, rp10, rp50 values from the clicked location
+  const rp2 = parseFloat(document.getElementById('clickedrp2').textContent);
+  const rp10 = parseFloat(document.getElementById('clickedrp10').textContent);
+  const rp50 = parseFloat(document.getElementById('clickedrp50').textContent);
+
+  // Check if the rp2, rp10, rp50 values are valid
+  if (isNaN(rp2) || isNaN(rp10) || isNaN(rp50)) {
+      alert("Please select a valid location.");
+      return;
+  }
+
+  // Automatically update the dropdowns for the "check flood" scenario
+  document.getElementById('dataType').value = 'stage';  // Set data type to 'stage'
+  document.getElementById('yAxisType').value = 'min';   // Set Y-axis type to 'min' for minimum stage
+
+  // Get the selected data type (Stage) and Y-axis type (min)
+  const selectedDataType = 'stage'; // We set it to 'stage' automatically now
+  const selectedYAxis = 'min';      // We set it to 'min' automatically now
+
+  // Now, we want to handle **stage** only for check flood scenario
+  if (selectedDataType === 'stage') {
+      let chartData = [];
+      let chartLabel = "Flood Stage Forecast";
+      let chartColor = "#0066cc";  // Blue for Stage
+      let yAxisLabel = "Stage (ft)";  // Y-axis label for stage
+
+      // Use the stage data directly from the clicked location
+      if (selectedYAxis === 'min') {
+          chartData = data.map(item => item.rp2);  // Use rp2 from the data for flood line
+      }
+
+      // Create flat lines at rp2, rp10, rp50 (these are constant for the clicked river location)
+      const rp2LineData = new Array(data.length).fill(rp2);  // Create a flat line at rp2 for all data points
+      const rp10LineData = new Array(data.length).fill(rp10);  // Create a flat line at rp10 for all data points
+      const rp50LineData = new Array(data.length).fill(rp50);  // Create a flat line at rp50 for all data points
+
+      // Update the chart with the new data (stage-related)
+      const ctx = document.getElementById('streamflowChart').getContext('2d');
+      if (chart) {
+          chart.destroy();  // Destroy existing chart before creating a new one
+      }
+
+      chart = new Chart(ctx, {
+          type: "line",
+          data: {
+              labels: data.map(item => item.Name),  // Using the river station names for labels
+              datasets: [
+                  {
+                      label: chartLabel,
+                      data: chartData,
+                      borderColor: chartColor,  // Use chartColor for the line
+                      borderWidth: 3,
+                      fill: true,
+                      tension: 0.4,
+                  },
+                  {
+                      label: `Flood Line at RP2 (${rp2} ft)`,
+                      data: rp2LineData,  // Flood line at RP2
+                      borderColor: "#FF0000",  // Red for RP2
+                      borderWidth: 2,
+                      borderDash: [5, 5],  // Dashed line
+                      fill: false,
+                      tension: 0,  // Flat line
+                      pointRadius: 0,  // No points on line
+                  },
+                  {
+                      label: `Flood Line at RP10 (${rp10} ft)`,
+                      data: rp10LineData,  // Flood line at RP10
+                      borderColor: "#FF6600",  // Orange for RP10
+                      borderWidth: 2,
+                      borderDash: [5, 5],  // Dashed line
+                      fill: false,
+                      tension: 0,  // Flat line
+                      pointRadius: 0,  // No points on line
+                  },
+                  {
+                      label: `Flood Line at RP50 (${rp50} ft)`,
+                      data: rp50LineData,  // Flood line at RP50
+                      borderColor: "#FFFF00",  // Yellow for RP50
+                      borderWidth: 2,
+                      borderDash: [5, 5],  // Dashed line
+                      fill: false,
+                      tension: 0,  // Flat line
+                      pointRadius: 0,  // No points on line
+                  },
+              ],
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                  legend: {
+                      labels: {
+                          color: "black",
+                          font: {
+                              size: 16,
+                              weight: "bold",
+                          },
+                      },
+                  },
+                  tooltip: {
+                      backgroundColor: "rgba(0, 0, 0, 0.8)",
+                      titleFont: { size: 14, weight: "bold" },
+                      bodyFont: { size: 12 },
+                      cornerRadius: 8,
+                  },
+              },
+              scales: {
+                  x: {
+                      ticks: { color: "black", font: { size: 14 } },
+                      grid: { color: "rgba(0, 0, 0, 0.1)" },
+                      title: {
+                          display: true,
+                          text: "River Stations",  // Title of X-axis
+                          color: "black",
+                          font: { size: 16, weight: "bold" },
+                      },
+                  },
+                  y: {
+                      ticks: { color: "black", font: { size: 14 } },
+                      grid: { color: "rgba(0, 0, 0, 0.1)" },
+                      title: {
+                          display: true,
+                          text: yAxisLabel,  // Y-axis label for stage
+                          color: "black",
+                          font: { size: 16, weight: "bold" },
+                      },
+                      min: 0,  // Set minimum Y-axis value to 0
+                  },
+              },
+          },
+      });
+  }
+}

@@ -14,7 +14,7 @@
   <div class="container">
     <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
     <hr>
-    <h1>HW 8</h1>
+    <h1>HW 9</h1>
     <hr>
     <p>The National Water Model (NWM) is a hydrologic model where real-time and future streamflow projections are provided across the continental US.
       We can pull the data from NWM with an API directly to this html site.<br>
@@ -28,20 +28,11 @@
     <hr>
     <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
 
-    <hr>
-    <h2>Reach ID</h2>
-    <hr>
-    <p>To pull data from the NWM, we need to identify a reach ID. The reach ID identifies the stream that we want to pull data from.
-      To find your desired reach ID, open NOAA NWM [<a href="https://water.noaa.gov">NWM Map</a>] and choose the desired point on the map.
-    </p>
 
     <hr>
     <h2>Forecast</h2>
     <hr>
 
-    <p>Type the Gauge ID into the box and hit the "Get Forecast" button to see results.<br>
-      <input type="text" id="gaugeID" placeholder="Gauge ID Here">
-      <button onclick="Forecast()">Get Forecast</button>
  <!-- Container to center the dropdowns -->
 <div id="dropdown-container" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
   <!-- Dropdown to select Y-axis type: Average, Max, or Min -->
@@ -60,6 +51,9 @@
   </p>
 <br>
 
+<p>  Gauge ID:&nbsp; <b><span id="clickedGaugeId"></span></b> <br>
+  Location: &nbsp; <b><span id="clickedName"></span></b> </p>
+
 <!-- Forecast container with the table and chart -->
 <div id="forecast-container">
   <canvas id="streamflowChart"></canvas>
@@ -67,15 +61,16 @@
 <br>
 
 <hr>
-<h2>Depth Check</h2>
+<h2>Shallow Water Check</h2>
 <hr>
-<div>
+
 <p>
-  Is the water deep enough? Check here to see the minimum depths for each day to see if your watercraft is usable on each day. 
-  See above graph, hover mouse over green points to see dates when the stream is deep enough. <br>
+  Is the water deep enough for your recreation plans? Check here to see the lowest stream depths for each day to see if your watercraft is usable. 
+  See the above graph, hover mouse over green points to see dates when the stream will be deep enough, and red when it won't. <br>
   Watercraft: 
 <!-- Input for selecting watercraft type -->
   <select id="rectype" onchange="updateReqDepth()">
+    <option value="" disabled selected>Choose a watercraft</option> <!-- Blank option -->
       <option value="tube">Tube</option>
       <option value="raft">Raft</option>
       <option value="kayak">Kayak</option>
@@ -93,32 +88,22 @@
 
   <!-- Hidden input field to store reqDepth value -->
   <input type="hidden" id="reqDepth" />
-</div>
+</p>
+
+<hr>
+<h2>Flood Check</h2>
+<hr>
+<p>
+  Watch out for floods! Click on the button here for potential flood flows to appear on the forecast graph. Red points indicate flooding conditions.
+  The bottom line is a small flood (likely to occur every other year). The middle line is a medium flood (likely to occur every ten years).
+  The top line is a large flood (likely to occure every fifty years). <br>
+    <!-- Button to trigger low elevation check -->
+    <button onclick="checkFlood()">
+      Check Flood
+  </button>
 </p>
 
 
-    <hr>
-
-
-
-    <p>Watercraft: 
-      <select id="rectype">
-        <option value="NA"> ---</option>
-        <option value="tube">Tube</option>
-        <option value="raft">Raft</option>
-        <option value="kayak">Kayak</option>
-        <option value="canoe">Canoe</option>
-        <option value="outboard">Outboard Motorboat</option>
-        <option value="inboard">Inboard Motorboat</option>
-      </select>
-    </p>
-
-    <!-- Button to trigger the checkrec function -->
-    <button onclick="checkrec()">Check Required Depth</button>
-
-    Required Depth:   <b><span id="reqdepth"></span></b> 
-    Forecast Lowest Depth:   <b><span id="outputvalue"></span></b> 
-    Clearance?&nbsp; <b><span id="check"></span></b>
 
     <hr>
     <h2>Process Explained</h2>
