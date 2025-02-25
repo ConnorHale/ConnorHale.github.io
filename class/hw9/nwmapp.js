@@ -1,5 +1,5 @@
 // Initialize the map
-const map = L.map('map', {
+var map = L.map('map', {
     center: [43.833, -116.55669],  // Set the initial view
     zoom: 7,                      // Initial zoom level
     scrollWheelZoom: false,        // Disable scroll zoom
@@ -375,27 +375,26 @@ function checkLowElevation() {
 }
 
 
+ // Fetch the CSV data
+ fetch('gauges.csv')  // Update with your correct path to the CSV
+ .then(response => response.text())
+ .then(csvString => {
+     // Parse the CSV data using PapaParse
+     const data = Papa.parse(csvString, {
+         header: true, // Use first row as headers
+         dynamicTyping: true // Automatically convert types
+     }).data;
 
-// Add tile layer (using Esri World Imagery as an example)
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-}).addTo(map);
-
- // Read markers data from data.csv
- $.get('./gauges.csv', function(csvString) {
-
-    // Use PapaParse to convert string to array of objects
-    var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
-
-    // For each row in data, create a marker and add it to the map
-    // For each row, columns `Latitude`, `Longitude`, and `Title` are required
-    for (var i in data) {
-      var row = data[i];
-
-      var marker = L.marker([row.Lat, row.Long], {
-        opacity: 1
-      }).bindPopup(row.Title);
-      
-      marker.addTo(map);
-    }
-});
+     // Loop through the data and create markers
+     data.forEach(row => {
+         // Ensure we have valid latitude and longitude
+         if (row.Lat && row.Long) {
+             L.marker([row.Lat, row.Long])  // Create a marker at lat, long
+                 .bindPopup(`<strong>${row.Name}</strong><br>GaugeID: ${row.GaugeID}`)  // Popup with data
+                 .addTo(map);  // Add the marker to the map
+         }
+     });
+ })
+ .catch(error => {
+     console.error('Error loading CSV:', error);
+ });

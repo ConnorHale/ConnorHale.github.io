@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with CSV Data</title>
+
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <!-- Include PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <!-- Include Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        /* Set map size */
+        #map {
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([43.6606, -116.279], 8); // Set to center the map
+
+        // Add tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Fetch the CSV data
+        fetch('gauges.csv')  // Update with the correct path to your CSV
+            .then(response => response.text())
+            .then(csvString => {
+                // Parse the CSV data using PapaParse
+                const data = Papa.parse(csvString, {
+                    header: true, // Use the first row as column headers
+                    dynamicTyping: true // Automatically convert types (numbers, etc.)
+                }).data;
+
+                // Log the data to see its structure
+                console.log(data);
+
+                // Loop through the data and create markers
+                data.forEach(row => {
+                    // Check if latitude and longitude are available
+                    if (row.Lat && row.Long) {
+                        L.marker([row.Lat, row.Long])  // Create a marker at lat, long
+                            .bindPopup(`<strong>${row.Name}</strong><br>GaugeID: ${row.GaugeID}`)  // Popup with data
+                            .addTo(map);  // Add the marker to the map
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading CSV:', error);
+            });
+    </script>
+</body>
+</html>
