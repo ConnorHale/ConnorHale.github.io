@@ -398,3 +398,8 @@ function checkLowElevation() {
  .catch(error => {
      console.error('Error loading CSV:', error);
  });
+
+
+ L.marker([row.Lat, row.Long])
+ .bindPopup(`<strong>${row.Name}</strong><br>GaugeID: ${row.GaugeID}`)
+ .addTo(map);  // Add marker to the map
