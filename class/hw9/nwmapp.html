@@ -1,183 +1,185 @@
 <html>
+
 <head>
   <title>NWM Forecast Viewer</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="../../mystyle.css">  
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <style>
-#forecast-container {
-    text-align: center;
-    padding: 20px;
-}
-
-#timeseries-datatable {
-    width: 80%;          /* Adjust width as needed */
-    margin: 0 auto;      /* Center the table horizontally */
-    border-collapse: collapse; /* Make the borders collapse into a single line */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a polished look */
-}
-
-#timeseries-datatable th, #timeseries-datatable td {
-    padding: 10px 15px; /* Add padding to cells for better spacing */
-    text-align: center;  /* Center the content of each cell */
-    border: 1px solid #ddd; /* Light gray border for table cells */
-}
-
-#timeseries-datatable th {
-    background-color: #671b1b; /* Add a background color to the header */
-    color: white;              /* White text for header */
-    font-size: 18px;           /* Slightly larger font for header */
-    font-weight: bold;         /* Bold text for header */
-}
-
-#timeseries-datatable td {
-    font-size: 16px; /* Slightly smaller font for the data rows */
-    color: #333;     /* Dark text for better readability */
-}
-
-#timeseries-datatable tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light gray background for even rows */
-}
-
-#timeseries-datatable tr:hover {
-    background-color: #ddd; /* Highlight rows on hover */
-}
-
-
-#streamflowChart {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 800px;
-    height: 400px; 
-    max-height: 600px;
-    margin-left: auto; 
-    margin-right: auto;
-}
-  </style>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 
-<div class="container">
 <body>
-  <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
-  <hr>
-  <h1>HW 8</h1>
-  <hr>
-<p>The National Water Model (NWM) is a hydrologic model where real-time and future streamflow projections are provided across the continental US.
-  We can pull the data from NWM with an API directly to this html site.<br>
-  For More Information: <a href="https://water.noaa.gov/about/nwm"> NWM Summary</a>,
-  <a href="https://www.sciencedirect.com/science/article/pii/S1364815224001841"> NWM Paper 1</a>,
-  <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/1752-1688.13184"> NWM Paper 2</a>
-</p>
+  <div class="container">
+    <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+    <hr>
+    <h1>HW 8</h1>
+    <hr>
+    <p>The National Water Model (NWM) is a hydrologic model where real-time and future streamflow projections are provided across the continental US.
+      We can pull the data from NWM with an API directly to this html site.<br>
+      For More Information: <a href="https://water.noaa.gov/about/nwm"> NWM Summary</a>,
+      <a href="https://www.sciencedirect.com/science/article/pii/S1364815224001841"> NWM Paper 1</a>,
+      <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/1752-1688.13184"> NWM Paper 2</a>
+    </p>
 
-<hr>
-<h2>Maps for Reach ID</h2>
-<hr>
-<div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
+    <hr>
+    <h2>Maps for Reach ID</h2>
+    <hr>
+    <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
 
-<hr>
-<h2>Reach ID</h2>
-<hr>
-<p>To pull data from the NWM, we need to identify a reach ID. The reach ID identifies the stream that we want to pull data from.
-  To find your desired reach ID, open NOAA NWM [<a href="https://water.noaa.gov">NWM Map</a>] and choose the desired point on the map.
-</p>
-<hr>
-<h2>Forecast</h2>
-<hr>
-<p>Type the Reach ID into the box and hit the "Get Forecast" button to see results.<br>
-  <input type="text" id="reachID" placeholder="Reach ID Here">
-  <button onclick="Forecast()">Get Forecast</button>
-        </section>
-      </p>
-  
-  <div id="forecast-container">
-    <table id="timeseries-datatable">
-      <thead>
-        <tr>
-          <th>Timestamp</th>
-          <th>Streamflow (cfs)</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-    <canvas id="streamflowChart"></canvas>
+    <hr>
+    <h2>Reach ID</h2>
+    <hr>
+    <p>To pull data from the NWM, we need to identify a reach ID. The reach ID identifies the stream that we want to pull data from.
+      To find your desired reach ID, open NOAA NWM [<a href="https://water.noaa.gov">NWM Map</a>] and choose the desired point on the map.
+    </p>
+
+    <hr>
+    <h2>Forecast</h2>
+    <hr>
+
+    <p>Type the Gauge ID into the box and hit the "Get Forecast" button to see results.<br>
+      <input type="text" id="gaugeID" placeholder="Gauge ID Here">
+      <button onclick="Forecast()">Get Forecast</button>
+ <!-- Container to center the dropdowns -->
+<div id="dropdown-container" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+  <!-- Dropdown to select Y-axis type: Average, Max, or Min -->
+  <select id="yAxisType" onchange="updateChart()">
+    <option value="avg">Average</option>
+    <option value="max">Maximum</option>
+    <option value="min">Minimum</option>
+  </select>
+
+  <!-- Dropdown to select data type: Streamflow or Stage -->
+  <select id="dataType" onchange="updateChart()">
+    <option value="flow">Streamflow</option>
+    <option value="stage">Water Elevation</option>
+  </select>
   </div>
+  </p>
+<br>
+
+<!-- Forecast container with the table and chart -->
+<div id="forecast-container">
+  <canvas id="streamflowChart"></canvas>
+</div>
+<br>
 
 <hr>
 <h2>Depth Check</h2>
 <hr>
-<p>Watercraft:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <select id ="rectype" name="rec">
-    <option value="tube">Tube</option>
-    <option value="raft">Raft</option>
-    <option value="kayak">Kayak</option>
-    <option value="canoe">Canoe</option>
-    <option value="outboard">Small Outboard Motorboat</option>
-    <option value="inboard">Inboard Motorboat</option>
+<div>
+<p>
+  Is the water deep enough? Check here to see the minimum depths for each day to see if your watercraft is usable on each day. 
+  See above graph, hover mouse over green points to see dates when the stream is deep enough. <br>
+  Watercraft: 
+<!-- Input for selecting watercraft type -->
+  <select id="rectype" onchange="updateReqDepth()">
+      <option value="tube">Tube</option>
+      <option value="raft">Raft</option>
+      <option value="kayak">Kayak</option>
+      <option value="canoe">Canoe</option>
+      <option value="outboard">Outboard Motorboat</option>
+      <option value="inboard">Inboard Motorboat</option>
   </select>
-</p>
-<input type="submit" onclick="checkrec()">
-Required Depth:   <b><span id="reqdepth"></span></b> 
-Forecast Lowest Depth:   <b><span id="outputvalue"></span></b> 
-Clearance?&nbsp; <b><span id="check"></span></b>
-  <hr>
-  <h2>Process Explained</h2>
-  <hr>
-  <ol>
-    <li>
-        <strong>Open the Reach ID</strong>
-        <div class="highlight">
-            <code>
-                const apiUrl = `https://api.water.noaa.gov/nwps/v1/reaches/${reachId}/streamflow?series=short_range`; <br>
-                const response = await fetch(apiUrl);
-            </code>
-        </div>
-    </li>
-    <li>
-        <strong>Record timesteps and flow values for a short range of time</strong>
-        <div class="highlight">
-            <code>
-                const streamflowData = json_data.shortRange.series.data; <br>
-                const timestamps = streamflowData.map(item => item.validTime); <br>
-                const flowValues = streamflowData.map(item => item.flow);
-            </code>
-        </div>
-    </li>
-    <li>
-        <strong>Populate the table with data from the range</strong>
-        <div class="highlight">
-            <code>
-                const table = document.getElementById('timeseries-datatable').getElementsByTagName('tbody')[0]; <br>
-                table.innerHTML = ""; <br><br>
+    <!-- Button to trigger low elevation check -->
+    <button onclick="checkLowElevation()">
+      Check Low Elevation
+  </button>
 
-                for (let i = 0; i &lt; streamflowData.length; i++) { <br>
-                    const row = table.insertRow(); <br>
-                    const timestampCell = row.insertCell(); <br>
-                    const flowCell = row.insertCell(); <br>
-                    timestampCell.textContent = timestamps[i]; <br>
-                    flowCell.textContent = flowValues[i]; <br>
-                }
-            </code>
-        </div>
-    </li>
-    <li>
-        <strong>Create and populate the graph</strong>
-        <div class="highlight">
-            <code>
-                const ctx = document.getElementById('streamflowChart').getContext('2d'); <br>
-                let chart = Chart.getChart('streamflowChart');
-            </code>
-        </div>
-    </li>
-</ol>
-<script>
-  document.querySelectorAll('a').forEach(link => {
-    link.setAttribute('target', '_blank');
-    link.setAttribute('rel', 'noopener noreferrer');
-  });
-</script>
-  <script src="nwmapp.js"></script> </body>
+  <!-- Display the required depth -->
+  <p id="reqDepthDisplay"></p>
+
+  <!-- Hidden input field to store reqDepth value -->
+  <input type="hidden" id="reqDepth" />
 </div>
+</p>
+
+
+    <hr>
+
+
+
+    <p>Watercraft: 
+      <select id="rectype">
+        <option value="NA"> ---</option>
+        <option value="tube">Tube</option>
+        <option value="raft">Raft</option>
+        <option value="kayak">Kayak</option>
+        <option value="canoe">Canoe</option>
+        <option value="outboard">Outboard Motorboat</option>
+        <option value="inboard">Inboard Motorboat</option>
+      </select>
+    </p>
+
+    <!-- Button to trigger the checkrec function -->
+    <button onclick="checkrec()">Check Required Depth</button>
+
+    Required Depth:   <b><span id="reqdepth"></span></b> 
+    Forecast Lowest Depth:   <b><span id="outputvalue"></span></b> 
+    Clearance?&nbsp; <b><span id="check"></span></b>
+
+    <hr>
+    <h2>Process Explained</h2>
+    <hr>
+    <ol>
+      <li>
+          <strong>Open the Reach ID</strong>
+          <div class="highlight">
+              <code>
+                  const apiUrl = `https://api.water.noaa.gov/nwps/v1/reaches/${reachId}/streamflow?series=short_range`; <br>
+                  const response = await fetch(apiUrl);
+              </code>
+          </div>
+      </li>
+      <li>
+          <strong>Record timesteps and flow values for a short range of time</strong>
+          <div class="highlight">
+              <code>
+                  const streamflowData = json_data.shortRange.series.data; <br>
+                  const timestamps = streamflowData.map(item => item.validTime); <br>
+                  const flowValues = streamflowData.map(item => item.flow);
+              </code>
+          </div>
+      </li>
+      <li>
+          <strong>Populate the table with data from the range</strong>
+          <div class="highlight">
+              <code>
+                  const table = document.getElementById('timeseries-datatable').getElementsByTagName('tbody')[0]; <br>
+                  table.innerHTML = ""; <br><br>
+
+                  for (let i = 0; i < streamflowData.length; i++) { <br>
+                      const row = table.insertRow(); <br>
+                      const timestampCell = row.insertCell(); <br>
+                      const flowCell = row.insertCell(); <br>
+                      timestampCell.textContent = timestamps[i]; <br>
+                      flowCell.textContent = flowValues[i]; <br>
+                  }
+              </code>
+          </div>
+      </li>
+      <li>
+          <strong>Create and populate the graph</strong>
+          <div class="highlight">
+              <code>
+                  const ctx = document.getElementById('streamflowChart').getContext('2d'); <br>
+                  let chart = Chart.getChart('streamflowChart');
+              </code>
+          </div>
+      </li>
+    </ol>
+    <script>
+      document.querySelectorAll('a').forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      });
+    </script>
+
+  </div>
+  <script src="nwmapp.js"></script> <!-- Move the external script to the end of the body -->
+</body>
+
 </html>
+

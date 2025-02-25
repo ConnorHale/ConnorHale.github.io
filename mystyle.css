@@ -36,27 +36,25 @@ body {
     justify-content: center;
     }
 
-/* Select Box */
+/* Style the select elements (dropdowns) */
 select {
-    font-size: 16px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='%23000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); /* Custom arrow */
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    transition: all 0.3s ease; /* Smooth transitions */
-  }
-  
-  select:hover {
-    border-color: #aaa;
-    background-color: #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Box shadow on hover */
-  }
+  width: auto; /* Allows the dropdown to resize based on the content */
+  padding: 5px 10px; /* Add some padding for better appearance */
+  font-size: 14px; /* Adjust the font size to fit content */
+  min-width: 120px; /* Ensure there's a minimum width */
+  max-width: 300px; /* Optional: Set a maximum width for large content */
+  box-sizing: content-box; /* Ensures padding doesn't affect the width */
+  border: 1px solid #ccc; /* Add a border for styling */
+  border-radius: 4px; /* Slight rounding of the corners */
+  background-color: #fff; /* Background color for select box */
+}
+
+/* Optional: Style the dropdown when hovered or focused */
+select:hover, select:focus {
+  border-color: #007bff; /* Change the border color on hover/focus */
+  outline: none; /* Remove default focus outline */
+}
+
   
   select:focus {
     outline: none;
@@ -158,4 +156,87 @@ ol li code {
     color: #444;
     padding: 8px;
     border-radius: 5px;
+}
+
+/*NWM Stuff*/
+
+#streamflowChart {
+  height: 400px;  /* Set a fixed height */
+  width: 100%;    /* Make the width responsive */
+}
+
+#forecast-container {
+  text-align: center;
+  padding: 20px;
+}
+
+#timeseries-datatable {
+  width: 80%;          /* Adjust width as needed */
+  margin: 0 auto;      /* Center the table horizontally */
+  border-collapse: collapse; /* Make the borders collapse into a single line */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a polished look */
+}
+
+#timeseries-datatable th, #timeseries-datatable td {
+  padding: 10px 15px; /* Add padding to cells for better spacing */
+  text-align: center;  /* Center the content of each cell */
+  border: 1px solid #ddd; /* Light gray border for table cells */
+}
+
+#timeseries-datatable th {
+  background-color: #671b1b; /* Add a background color to the header */
+  color: white;              /* White text for header */
+  font-size: 18px;           /* Slightly larger font for header */
+  font-weight: bold;         /* Bold text for header */
+}
+
+#timeseries-datatable td {
+  font-size: 16px; /* Slightly smaller font for the data rows */
+  color: #333;     /* Dark text for better readability */
+}
+
+#timeseries-datatable tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray background for even rows */
+}
+
+#timeseries-datatable tr:hover {
+  background-color: #ddd; /* Highlight rows on hover */
+}
+
+
+#streamflowChart {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  height: 400px; 
+  max-height: 600px;
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+/* Style the buttons */
+button {
+  font-size: 14px;        /* Adjust font size to make the button size moderate */
+  padding: 8px 16px;      /* Adjust padding for a smaller button */
+  margin: 5px 0;          /* Add margin to separate the button from other content */
+  background-color: #6c757d; /* Set background color to gray */
+  color: white;           /* White text color */
+  border: none;           /* Remove default border */
+  border-radius: 5px;     /* Round the corners */
+  cursor: pointer;        /* Change the cursor to pointer */
+  transition: background-color 0.3s ease;  /* Smooth transition for background color */
+}
+
+/* Hover effect for buttons */
+button:hover {
+  background-color: #5a6268; /* Slightly darker gray on hover */
+}
+
+/* Align buttons with text in <p> tags */
+p button {
+  display: inline-block;  /* Make button appear inline with text */
+  vertical-align: middle; /* Align button vertically with text */
+  text-align: center;     /* Ensure button text is centered */
+  margin-left: 10px;      /* Add some space between button and text */
+  margin-top: 0;          /* Ensure no extra space above the button */
 }

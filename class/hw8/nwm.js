@@ -118,10 +118,6 @@ async function Forecast() {
           },
       },
   });
-  
-
-  
-  
     } catch (error) {
       console.error('Error fetching or processing data:', error);
       alert("Error fetching forecast: " + error.message);
