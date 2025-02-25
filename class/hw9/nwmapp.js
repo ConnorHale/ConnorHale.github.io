@@ -1,11 +1,6 @@
 // Initialize the map
-var map = L.map('map', {
-    center: [44.15, -116.55669],  // Set the initial view
-    zoom: 9,                      // Initial zoom level
-    scrollWheelZoom: false,        // Disable scroll zoom
-    dragging: false,               // Disable dragging (panning)
-    touchZoom: false,              // Disable touch zoom (for mobile devices)
-    doubleClickZoom: false         // Disable zooming via double-click
+var map = L.map('map', {center: [44.15, -116.55669],zoom: 9, scrollWheelZoom: false, 
+  ragging: false,  touchZoom: false, doubleClickZoom: false        
   });
   
   // Add tile layer
@@ -151,7 +146,7 @@ async function Forecast() {
             grid: { color: "rgba(0, 0, 0, 0.1)" },
             title: {
               display: true,
-              text: "Streamflow (cfs)",
+              text: "Streamflow (kcfs)",
               color: "black",
               font: { size: 16, weight: "bold" },
             },
@@ -499,6 +494,7 @@ const data = [
 
 // Variable to store clicked GaugeID
 let clickedGaugeID = null;
+let clickedrp2 = null;
 
 // Loop through the data and create markers
 data.forEach(row => {
@@ -506,58 +502,57 @@ data.forEach(row => {
       const marker = L.marker([row.Lat, row.Long]) // Create a marker at lat, long
           .bindTooltip(row.Name)  // Tooltip will show the Name on hover
           .addTo(map);  // Add the marker to the map
-
       // Event listener for click to store GaugeID
       marker.on('click', function() {
         clickedGaugeID = row.GaugeID;
         clickedName = row.Name;
-        clickedrp2 = row.rp2;
-        clickedrp10 = row.rp10;
-        clickedrp50 = row.rp50;
+        clickedRp2 = row.rp2/1000; 
         document.getElementById('clickedGaugeId').textContent = clickedGaugeID;
         document.getElementById('clickedName').textContent = clickedName;
-
         Forecast()
       });
   }
 });
 
-function checkFlood() {
-  // Get the rp2, rp10, rp50 values from the clicked location
-  const rp2 = parseFloat(document.getElementById('clickedrp2').textContent);
-  const rp10 = parseFloat(document.getElementById('clickedrp10').textContent);
-  const rp50 = parseFloat(document.getElementById('clickedrp50').textContent);
 
-  // Check if the rp2, rp10, rp50 values are valid
-  if (isNaN(rp2) || isNaN(rp10) || isNaN(rp50)) {
-      alert("Please select a valid location.");
+function checkFlood() {
+  // Use clickedRp2 directly, no need to get it from the DOM
+  const clickedrp2 = parseFloat(clickedRp2);  // We already have clickedRp2 in JavaScript
+
+  // Check if clickedrp2 is valid
+  if (isNaN(clickedrp2)) {
+      alert("Error: Invalid rp2 value.");
       return;
   }
 
-  // Automatically update the dropdowns for the "check flood" scenario
-  document.getElementById('dataType').value = 'stage';  // Set data type to 'stage'
-  document.getElementById('yAxisType').value = 'min';   // Set Y-axis type to 'min' for minimum stage
+  // Automatically update the dropdowns for the "check low elevation" scenario
+  document.getElementById('dataType').value = 'flow';  // Set data type to 'flow'
+  document.getElementById('yAxisType').value = 'max';   // Set Y-axis type to 'min' for minimum stage
 
   // Get the selected data type (Stage) and Y-axis type (min)
-  const selectedDataType = 'stage'; // We set it to 'stage' automatically now
-  const selectedYAxis = 'min';      // We set it to 'min' automatically now
+  const selectedDataType = 'flow'; // We set it to 'flow' automatically now
+  const selectedYAxis = 'max';      // We set it to 'min' automatically now
 
-  // Now, we want to handle **stage** only for check flood scenario
-  if (selectedDataType === 'stage') {
+  // Now, we want to handle **stage** only for check low elevation
+  if (selectedDataType === 'flow') {
       let chartData = [];
-      let chartLabel = "Flood Stage Forecast";
+      let chartLabel = "Maximum Flow Forecast";
       let chartColor = "#0066cc";  // Blue for Stage
-      let yAxisLabel = "Stage (ft)";  // Y-axis label for stage
+      let yAxisLabel = "Flow (kcfs)";  // Y-axis label for Flow
 
-      // Use the stage data directly from the clicked location
-      if (selectedYAxis === 'min') {
-          chartData = data.map(item => item.rp2);  // Use rp2 from the data for flood line
+      // Use minimum stage data (maxFlow) for the selected Y-axis type
+      if (selectedYAxis === 'max') {
+          chartData = groupedData.map(item => item.maxFlow);
       }
 
-      // Create flat lines at rp2, rp10, rp50 (these are constant for the clicked river location)
-      const rp2LineData = new Array(data.length).fill(rp2);  // Create a flat line at rp2 for all data points
-      const rp10LineData = new Array(data.length).fill(rp10);  // Create a flat line at rp10 for all data points
-      const rp50LineData = new Array(data.length).fill(rp50);  // Create a flat line at rp50 for all data points
+      // Create a flat line at the reqDepth
+      const flatLineData = groupedData.map(item => clickedrp2);  // Create a line at reqDepth for each date
+
+      // Create color dataset for the points based on comparison with reqDepth
+      const colorData = groupedData.map(item => {
+          // Compare the minStage value with reqDepth
+          return item.maxFlow < clickedrp2 ? "red" : "green";  // red for below, green for above
+      });
 
       // Update the chart with the new data (stage-related)
       const ctx = document.getElementById('streamflowChart').getContext('2d');
@@ -568,7 +563,7 @@ function checkFlood() {
       chart = new Chart(ctx, {
           type: "line",
           data: {
-              labels: data.map(item => item.Name),  // Using the river station names for labels
+              labels: groupedData.map(item => item.date),
               datasets: [
                   {
                       label: chartLabel,
@@ -577,36 +572,20 @@ function checkFlood() {
                       borderWidth: 3,
                       fill: true,
                       tension: 0.4,
+                      pointBackgroundColor: colorData,  // Color points based on condition
+                      pointBorderColor: "#ffffff",
+                      pointRadius: 5,
+                      pointHoverRadius: 8,
                   },
                   {
-                      label: `Flood Line at RP2 (${rp2} ft)`,
-                      data: rp2LineData,  // Flood line at RP2
-                      borderColor: "#FF0000",  // Red for RP2
+                      label: `Flat Line at Flood Streamflow (${clickedrp2} kcfs)`,
+                      data: flatLineData,  // This creates the flat line
+                      borderColor: "#FF0000",  // Flat line color (Red)
                       borderWidth: 2,
-                      borderDash: [5, 5],  // Dashed line
+                      borderDash: [5, 5],  // Dashed line style
                       fill: false,
-                      tension: 0,  // Flat line
-                      pointRadius: 0,  // No points on line
-                  },
-                  {
-                      label: `Flood Line at RP10 (${rp10} ft)`,
-                      data: rp10LineData,  // Flood line at RP10
-                      borderColor: "#FF6600",  // Orange for RP10
-                      borderWidth: 2,
-                      borderDash: [5, 5],  // Dashed line
-                      fill: false,
-                      tension: 0,  // Flat line
-                      pointRadius: 0,  // No points on line
-                  },
-                  {
-                      label: `Flood Line at RP50 (${rp50} ft)`,
-                      data: rp50LineData,  // Flood line at RP50
-                      borderColor: "#FFFF00",  // Yellow for RP50
-                      borderWidth: 2,
-                      borderDash: [5, 5],  // Dashed line
-                      fill: false,
-                      tension: 0,  // Flat line
-                      pointRadius: 0,  // No points on line
+                      tension: 0,  // No curve, just a straight line
+                      pointRadius: 0,  // No points on the flat line
                   },
               ],
           },
@@ -636,7 +615,7 @@ function checkFlood() {
                       grid: { color: "rgba(0, 0, 0, 0.1)" },
                       title: {
                           display: true,
-                          text: "River Stations",  // Title of X-axis
+                          text: "Date",
                           color: "black",
                           font: { size: 16, weight: "bold" },
                       },
@@ -646,7 +625,7 @@ function checkFlood() {
                       grid: { color: "rgba(0, 0, 0, 0.1)" },
                       title: {
                           display: true,
-                          text: yAxisLabel,  // Y-axis label for stage
+                          text: yAxisLabel,  // Set Y-axis title dynamically based on selection
                           color: "black",
                           font: { size: 16, weight: "bold" },
                       },

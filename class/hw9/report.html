@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <title>Project Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../../mystyle.css">  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+    <hr>
+    <h1>Water Recreation Checking Tool (REPORT)</h1>
+    <hr>
+    <p>
+        The main application page includes:<br>
+        - A leaflet map with markers at gauge locations<br>
+        - A forecast graph that can be adjusted to display min, max, or average streamflow or stage<br>
+        - A tool to check if the water is deep enough for various watercraft<br>
+        - A tool to check for flooding<br>
+        <br>
+        Instead of using the API for the reach forecast, I chose to use the gauge forecast.
+        The benefit is that this enabled me to not only pull forecasts for streamflow, but also for water stage.
+        Unfortunately it also disabled the ability to choose between short, medium, and long forecasts.<br>
+        <br>
+        The flood estimations retrieved from an API key provided to the class appear to underpredict flood volumes at many location. <br>
+        <br>
+
+        <p>
+            Main Page: <a href="nwmapp.html">Main</a><br>
+            Guide: <a href="explain.html">Report</a>
+        </p>
+      
+</body>
+
+</html>
+

@@ -1,0 +1,375 @@
+<html>
+
+<head>
+  <title>NWM Forecast Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../../mystyle.css">  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
+    <hr>
+    <h1>Water Recreation Checking Tool (WALKTHROUGH)</h1>
+    <hr>
+    <p>Here's how I made the map:
+        <ol>
+            <li>
+                <strong>Link leaflet</strong>
+                <div class="highlight">
+                    <code>
+                        link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                        script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">/script>
+                    </code>
+                </div>
+            </li>
+            <li>
+                <strong>Format the Map</strong>
+                <div class="highlight">
+                    <code>
+                        // Initialize the map <br>
+                        var map = L.map('map', {center: [44.15, -116.55669],zoom: 9, scrollWheelZoom: false, 
+                        ragging: false,  touchZoom: false, doubleClickZoom: false        
+                        }); <br>
+                        // Add tile layer<br>
+                        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                        }).addTo(map);
+                    </code>
+                </div>
+            </li>
+ 
+        </ol>
+    </p>
+
+    <hr>
+    <h2>Choose your River</h2>
+    <hr>
+    <p>Here's how I made the markers:
+        <ol>
+            <li>
+                <strong>Define Locations</strong>
+                <div class="highlight">
+                    <code>
+                        const data = [
+                        {
+                            Name: "Boise River", <br>
+                            GaugeID: 13206000,<br>
+                            ReachID: 23398831,<br>
+                            Lat: 43.6606,<br>
+                            Long: -116.279,<br>
+                            rp2: 87.36,<br>
+                            rp5: 133.23,<br>
+                            rp10: 163.60,<br>
+                            rp25: 201.97,<br>
+                            rp50: 230.44,<br>
+                            rp100: 258.70<br>
+                        },<br>
+                        etc.
+                    </code>
+                </div>
+            </li>
+            <li>
+                <strong>Add data on click</strong>
+                <div class="highlight">
+                    <code>
+                        data.forEach(row => {<br>
+                            if (row.Lat && row.Long) {  // Ensure valid lat/long values<br>
+                                const marker = L.marker([row.Lat, row.Long]) // Create a marker at lat, long<br>
+                                    .bindTooltip(row.Name)  // Tooltip will show the Name on hover<br>
+                                    .addTo(map);  // Add the marker to the map<br>
+                                // Event listener for click to store GaugeID<br>
+                                marker.on('click', function() {<br>
+                                  clickedGaugeID = row.GaugeID;<br>
+                                  clickedName = row.Name;<br>
+                                  clickedRp2 = row.rp2/1000; <br>
+                                  document.getElementById('clickedGaugeId').textContent = clickedGaugeID;<br>
+                                  document.getElementById('clickedName').textContent = clickedName;<br>
+                                  Forecast()<br>
+                                });
+                            }
+                          });
+                    </code>
+                </div>
+            </li>
+ 
+        </ol>
+    </p>
+
+    <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
+
+
+    <hr>
+    <h2>Forecast</h2>
+    <hr>
+    <p> This is how I made the chart:
+        <ol>
+            <li>
+                <strong>Extract NWM data with API</strong>
+                <div class="highlight">
+                    <code>
+                        // Function to get forecast data from the API and process it<br>
+                        async function Forecast() { <br>
+                          if (!clickedGaugeID) {<<br>
+                            alert("Please click on a marker to select a Gauge ID.");<br>
+                            return;<br>
+                        }
+                        <br>
+                          const gaugeId = clickedGaugeID;  // Use the GaugeID stored in clickedGaugeID<br>
+                          <br>
+                          const forecastContainer = document.getElementById('forecast-container');<br>
+                          forecastContainer.style.display = 'block';<br>
+                          <br>
+                          try {<br>
+                            const apiUrl = `https://api.water.noaa.gov/nwps/v1/gauges/${gaugeId}/stageflow`;<br>
+                            const response = await fetch(apiUrl);<br>
+                    </code>
+                </div>
+            </li>
+            <li>
+                <strong>Create the Chart</strong>
+                <div class="highlight">
+                    <code>
+                        // Update or create the chart<br>
+                        const ctx = document.getElementById('streamflowChart').getContext('2d');<br>
+                        if (chart) {<br>
+                          chart.destroy();  // Destroy existing chart before creating a new one<br>
+                        }
+                    
+                        chart = new Chart(ctx, {<br>
+                          type: "line",<br>
+                          data: {<br>
+                            labels: groupedData.map(item => item.date),  // Use the date as the label<br>
+                            datasets: [<br>
+                              {<br>
+                                label: "Streamflow Forecast (Daily Average)",<br>
+                                data: groupedData.map(item => item.avgFlow),<br>
+                                borderColor: "#7a1b06",<br>
+                                borderWidth: 3,<br>
+                                fill: true,<br>
+                                tension: 0.4,<br>
+                                pointBackgroundColor: "#000000",<br>
+                                pointBorderColor: "#ffffff",<br>
+                                pointRadius: 5,<br>
+                                pointHoverRadius: 8,<br>
+                              }
+                            ],
+                          },
+                    </code>
+                </div>
+            </li>
+
+ 
+        </ol>
+
+    </p>
+
+
+<div id="dropdown-container" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+
+  <select id="yAxisType" onchange="updateChart()">
+    <option value="avg">Average</option>
+    <option value="max">Maximum</option>
+    <option value="min">Minimum</option>
+  </select>
+
+
+  <select id="dataType" onchange="updateChart()">
+    <option value="flow">Streamflow</option>
+    <option value="stage">Water Elevation</option>
+  </select>
+  </div>
+  </p>
+<br>
+
+<p> This is how I made the dropdown menus to choose data:
+    <ol>
+        <li>
+            <strong>HTML menus</strong>
+            <div class="highlight">
+                <code>
+                    div id="dropdown-container" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;"> <br>
+<br>
+                        select id="yAxisType" onchange="updateChart()"><br>
+                          option value="avg">Average</option><br>
+                          option value="max">Maximum</option><br>
+                          option value="min">Minimum</option><br>
+                        /select><br>
+                        <br>
+                        select id="dataType" onchange="updateChart()"><br>
+                          option value="flow">Streamflow</option><br>
+                          option value="stage">Water Elevation</option><br>
+                        </select><br>
+                </code>
+            </div>
+        </li>
+        <li>
+            <strong>Javascript code</strong>
+            <div class="highlight">
+                <code>
+                    // Update max and min for flow and stage<br>
+                    if (secondaryValue > group.maxFlow) group.maxFlow = secondaryValue;<br>
+                    if (secondaryValue < group.minFlow) group.minFlow = secondaryValue;<br>
+                    if (primaryValue > group.maxStage) group.maxStage = primaryValue;<br>
+                    if (primaryValue < group.minStage) group.minStage = primaryValue;<br>
+                  });<br>
+                </code>
+            </div>
+        </li>
+    </ol>
+</p>
+
+<p>  Gauge ID:&nbsp; <b><span id="clickedGaugeId"></span></b> <br>
+  Location: &nbsp; <b><span id="clickedName"></span></b> </p>
+
+
+<div id="forecast-container">
+  <canvas id="streamflowChart"></canvas>
+</div>
+<br>
+
+<hr>
+<h2>Shallow Water Check</h2>
+<hr>
+
+<p> This is how I made the shallow water check tool:
+    <ol>
+        <li>
+            <strong>Find the required depth for the chosen watercraft</strong>
+            <div class="highlight">
+                <code>
+                    function updateReqDepth() { <br>
+                        const rectype = document.getElementById('rectype').value;<br>
+                        let reqDepth;<br>
+                        <br>
+                        // Setting reqDepth based on selected watercraft<br>
+                        switch (rectype) {<br>
+                            case 'tube':<br>
+                            case 'raft':<br>
+                                reqDepth = 0.5;<br>
+                                break;<br>
+                            case 'kayak':<br>
+                                reqDepth = 1;<br>
+                                break;<br>
+                            case 'canoe':<br>
+                                reqDepth = 2;<br>
+                                break;<br>
+                            case 'outboard':<br>
+                                reqDepth = 3;v
+                                break;<br>
+                            case 'inboard':<br>
+                                reqDepth = 4;<br>
+                                break;v
+                            default:<br>
+                                reqDepth = 0;<br>
+                        }
+                </code>
+            </div>
+        </li>
+        <li>
+            <strong>Add the elevation line:</strong>
+            <div class="highlight">
+                <code>
+                    if (selectedDataType === 'stage') { <br>
+                        let chartData = [];<br>
+                        let chartLabel = "Minimum Stage Forecast";<br>
+                        let chartColor = "#0066cc";  // Blue for Stage<br>
+                        let yAxisLabel = "Stage (ft)";  // Y-axis label for stage<br>
+                        <br>
+                        if (selectedYAxis === 'min') {<br>
+                            chartData = groupedData.map(item => item.minStage);<br>
+                        }<br>
+                        <br>
+                        const flatLineData = groupedData.map(item => reqDepth);  // Create a line at reqDepth for each date<br>
+                
+                </code>
+            </div>
+        </li>
+        <li>
+            <strong>Check each point on the chart:</strong>
+            <div class="highlight">
+                <code>
+                    const colorData = groupedData.map(item => { <br>
+                        // Compare the minStage value with reqDepth <br>
+                        return item.minStage < reqDepth ? "red" : "green";  <br>
+                    });<br>
+                </code>
+            </div>
+        </li>
+    </ol>
+</p>
+
+
+  <select id="rectype" onchange="updateReqDepth()">
+    <option value="" disabled selected>Choose a watercraft</option> 
+      <option value="tube">Tube</option>
+      <option value="raft">Raft</option>
+      <option value="kayak">Kayak</option>
+      <option value="canoe">Canoe</option>
+      <option value="outboard">Outboard Motorboat</option>
+      <option value="inboard">Inboard Motorboat</option>
+  </select>
+
+    <button onclick="checkLowElevation()">
+      Check Low Elevation
+  </button>
+
+  <p id="reqDepthDisplay"></p>
+
+
+  <input type="hidden" id="reqDepth" />
+</p>
+
+<hr>
+<h2>Flood Check</h2>
+<hr>
+<p> Similar to low elevation check:
+    <ol>
+        <li>
+            <strong>Pulled flood frequency from API key</strong>
+            <code>The estimations made with the key provided seem to be underestimating.</code>
+        </li>
+        <li>
+            <strong>Add flood line to chart</strong>
+            <div class="highlight">
+            </div>
+        </li>
+        <li>
+            <strong>Check each point on the chart:</strong>
+
+        </li>
+    </ol>
+</p>
+<p>
+  Watch out for floods! Click on the button here for potential flood flows to appear on the forecast graph. Red points indicate flooding conditions.
+  The bottom line is a small flood (likely to occur every other year). The middle line is a medium flood (likely to occur every ten years).
+  The top line is a large flood (likely to occure every fifty years). <br>
+
+    <button onclick="checkFlood()">
+      Check Flood
+  </button>
+  <br>
+  *Note: The flood prediction model being used tends to underpredict flood levels.
+  This page will likely identify every day as a flood.
+</p>
+
+
+
+    <hr>
+    <h2>Process Explained</h2>
+    <hr>
+    <p>
+Guide: <a href="newmapp.html">Main</a><br>
+Explanation: <a href="report.html">Report</a>
+ </p>
+
+  </div>
+  <script src="nwmapp.js"></script> 
+</body>
+
+</html>
+

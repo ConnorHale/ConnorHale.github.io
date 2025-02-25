@@ -14,17 +14,15 @@
   <div class="container">
     <p style="font-style: italic; font-size: 10px;"> Back to <a href="../../ce514.html">Class Page</a></p>
     <hr>
-    <h1>HW 9</h1>
+    <h1>Water Recreation Checking Tool</h1>
     <hr>
-    <p>The National Water Model (NWM) is a hydrologic model where real-time and future streamflow projections are provided across the continental US.
-      We can pull the data from NWM with an API directly to this html site.<br>
-      For More Information: <a href="https://water.noaa.gov/about/nwm"> NWM Summary</a>,
-      <a href="https://www.sciencedirect.com/science/article/pii/S1364815224001841"> NWM Paper 1</a>,
-      <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/1752-1688.13184"> NWM Paper 2</a>
+    <p>So, you want to go have fun on the beautiful waters in the Treasure Valley in Idaho!
+      But is the river ready for you? This tool checks both the water elevation and the streamflow 
+      to help you determine when it's safe to get on the river.
     </p>
 
     <hr>
-    <h2>Maps for Reach ID</h2>
+    <h2>Choose your River</h2>
     <hr>
     <div id="map" style="height:600px; width:98%; margin: 10px 10px;"></div>
 
@@ -32,7 +30,9 @@
     <hr>
     <h2>Forecast</h2>
     <hr>
-
+<p>
+If you want specifics, feel free to edit the drop down boxes below to see the forecast of
+minimum, average, and maximum streamflows and water depths in the next week. Scroll down for more tools. </p>
  <!-- Container to center the dropdowns -->
 <div id="dropdown-container" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
   <!-- Dropdown to select Y-axis type: Average, Max, or Min -->
@@ -101,6 +101,8 @@
     <button onclick="checkFlood()">
       Check Flood
   </button>
+  <br>
+  *Note: The flood prediction model being used tends to underpredict flood levels.
 </p>
 
 
@@ -108,59 +110,10 @@
     <hr>
     <h2>Process Explained</h2>
     <hr>
-    <ol>
-      <li>
-          <strong>Open the Reach ID</strong>
-          <div class="highlight">
-              <code>
-                  const apiUrl = `https://api.water.noaa.gov/nwps/v1/reaches/${reachId}/streamflow?series=short_range`; <br>
-                  const response = await fetch(apiUrl);
-              </code>
-          </div>
-      </li>
-      <li>
-          <strong>Record timesteps and flow values for a short range of time</strong>
-          <div class="highlight">
-              <code>
-                  const streamflowData = json_data.shortRange.series.data; <br>
-                  const timestamps = streamflowData.map(item => item.validTime); <br>
-                  const flowValues = streamflowData.map(item => item.flow);
-              </code>
-          </div>
-      </li>
-      <li>
-          <strong>Populate the table with data from the range</strong>
-          <div class="highlight">
-              <code>
-                  const table = document.getElementById('timeseries-datatable').getElementsByTagName('tbody')[0]; <br>
-                  table.innerHTML = ""; <br><br>
-
-                  for (let i = 0; i < streamflowData.length; i++) { <br>
-                      const row = table.insertRow(); <br>
-                      const timestampCell = row.insertCell(); <br>
-                      const flowCell = row.insertCell(); <br>
-                      timestampCell.textContent = timestamps[i]; <br>
-                      flowCell.textContent = flowValues[i]; <br>
-                  }
-              </code>
-          </div>
-      </li>
-      <li>
-          <strong>Create and populate the graph</strong>
-          <div class="highlight">
-              <code>
-                  const ctx = document.getElementById('streamflowChart').getContext('2d'); <br>
-                  let chart = Chart.getChart('streamflowChart');
-              </code>
-          </div>
-      </li>
-    </ol>
-    <script>
-      document.querySelectorAll('a').forEach(link => {
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
-      });
-    </script>
+    <p>
+      Main Page: <a href="explain.html">Report</a><br>
+      Explanation: <a href="report.html">Walkthrough</a>
+       </p>
 
   </div>
   <script src="nwmapp.js"></script> <!-- Move the external script to the end of the body -->
